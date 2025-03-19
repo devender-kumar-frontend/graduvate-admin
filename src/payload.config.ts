@@ -15,10 +15,13 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Universities } from './collections/Universities'
 import { Users } from './collections/Users'
+
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
+import { Events } from './collections/Events'
+import { Testimonials } from './collections/Testimonials'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,7 +68,18 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Universities, Countries, Media, Categories, Courses, Users],
+  collections: [
+    Pages,
+    Posts,
+    Universities,
+    Countries,
+    Media,
+    Categories,
+    Courses,
+    Users,
+    Events,
+    Testimonials,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

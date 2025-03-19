@@ -71,22 +71,59 @@ export const Countries: CollectionConfig<'countries'> = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
       type: 'tabs',
       tabs: [
         {
           fields: [
             {
-              name: 'heroImage',
+              name: 'title',
+              type: 'text',
+              required: true,
+            },
+
+            {
+              name: 'description',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'Banner',
               type: 'upload',
               relationTo: 'media',
             },
+
             {
-              name: 'content',
+              name: 'Heading 1',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'Description 1',
+              type: 'textarea',
+              required: false,
+            },
+            {
+              name: 'link',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'universities',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: true,
+              relationTo: 'universities',
+            },
+
+            {
+              name: 'Heading 2',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'Description 2',
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -103,8 +140,112 @@ export const Countries: CollectionConfig<'countries'> = {
               label: false,
               required: true,
             },
+            {
+              name: 'link 2',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'Admission Requirement Heading',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'Admission Requirement Descripton',
+              type: 'textarea',
+              required: false,
+            },
           ],
-          label: 'Content',
+          label: 'Overview',
+        },
+
+        {
+          fields: [
+            {
+              name: 'key feature list',
+              type: 'array',
+              label: 'key feature',
+              minRows: 2,
+              maxRows: 10,
+              labels: {
+                singular: 'keyfeature',
+                plural: 'keyfeatures',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                },
+                {
+                  name: 'value',
+                  type: 'text',
+                },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+              ],
+            },
+          ],
+          label: 'Key Factors',
+        },
+
+        {
+          fields: [
+            {
+              name: 'Admission requirement',
+              type: 'array',
+              label: 'admission feature',
+              minRows: 2,
+              maxRows: 10,
+              labels: {
+                singular: 'admisionfeature',
+                plural: 'admisionfeatures',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+              ],
+            },
+          ],
+          label: 'Admission requirement list',
+        },
+
+        {
+          fields: [
+            {
+              name: 'Faq list',
+              type: 'array',
+              label: 'faq list',
+              minRows: 2,
+              maxRows: 10,
+              labels: {
+                singular: 'faq',
+                plural: 'faqs',
+              },
+              fields: [
+                {
+                  name: 'question',
+                  type: 'text',
+                },
+                {
+                  name: 'answer',
+                  type: 'textarea',
+                },
+              ],
+            },
+          ],
+          label: 'Faqs list',
         },
         {
           fields: [
@@ -123,15 +264,6 @@ export const Countries: CollectionConfig<'countries'> = {
               },
               hasMany: true,
               relationTo: 'posts',
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'categories',
             },
           ],
           label: 'Meta',
