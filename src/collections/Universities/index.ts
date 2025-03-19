@@ -71,20 +71,34 @@ export const Universities: CollectionConfig<'universities'> = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
       type: 'tabs',
       tabs: [
         {
           fields: [
             {
-              name: 'universityImage',
+              name: 'title',
+              type: 'text',
+              required: true,
+            },
+
+            {
+              name: 'image',
               type: 'upload',
               relationTo: 'media',
             },
+
+            {
+              name: 'short Description',
+              type: 'textarea',
+              required: true,
+            },
+
+            {
+              name: 'Download Brochure',
+              type: 'upload',
+              relationTo: 'media',
+            },
+
             {
               name: 'content',
               type: 'richText',
@@ -101,7 +115,7 @@ export const Universities: CollectionConfig<'universities'> = {
                 },
               }),
               label: false,
-              required: true,
+              required: false,
             },
             {
               name: 'courses',
@@ -112,11 +126,16 @@ export const Universities: CollectionConfig<'universities'> = {
               hasMany: true,
               relationTo: 'courses',
             },
-          ],
-          label: 'Content',
-        },
-        {
-          fields: [
+
+            {
+              name: 'similar universities',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: true,
+              relationTo: 'universities',
+            },
             {
               name: 'countries',
               type: 'relationship',
@@ -126,9 +145,93 @@ export const Universities: CollectionConfig<'universities'> = {
               hasMany: true,
               relationTo: 'countries',
             },
+
+            {
+              name: 'Admission title',
+              type: 'text',
+              required: false,
+            },
+            {
+              name: 'admission description',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => {
+                  return [
+                    ...rootFeatures,
+                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    FixedToolbarFeature(),
+                    InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                  ]
+                },
+              }),
+              label: false,
+              required: true,
+            },
           ],
-          label: 'Meta',
+          label: 'Overview',
         },
+        {
+          fields: [
+            {
+              name: 'key feature list',
+              type: 'array',
+              label: 'key feature',
+              minRows: 2,
+              maxRows: 10,
+              labels: {
+                singular: 'keyfeature',
+                plural: 'keyfeatures',
+              },
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                },
+                {
+                  name: 'value',
+                  type: 'text',
+                },
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+              ],
+            },
+          ],
+          label: 'Key Factors',
+        },
+
+        {
+          fields: [
+            {
+              name: 'Faq list',
+              type: 'array',
+              label: 'faq list',
+              minRows: 2,
+              maxRows: 10,
+              labels: {
+                singular: 'faq',
+                plural: 'faqs',
+              },
+              fields: [
+                {
+                  name: 'question',
+                  type: 'text',
+                },
+                {
+                  name: 'answer',
+                  type: 'textarea',
+                },
+              ],
+            },
+          ],
+          label: 'Faqs list',
+        },
+
         {
           name: 'meta',
           label: 'SEO',

@@ -74,6 +74,42 @@ export const Posts: CollectionConfig<'posts'> = {
       type: 'text',
       required: true,
     },
+
+    {
+      name: 'short description',
+      type: 'textarea',
+      required: false,
+    },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+    {
+      name: 'location',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [
+            ...rootFeatures,
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+            HorizontalRuleFeature(),
+          ]
+        },
+      }),
+      label: false,
+      required: true,
+    },
+
     {
       type: 'tabs',
       tabs: [

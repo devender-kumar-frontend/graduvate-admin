@@ -223,6 +223,24 @@ export interface Page {
 export interface Post {
   id: string;
   title: string;
+  'short description'?: string | null;
+  image?: (string | null) | Media;
+  location?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   heroImage?: (string | null) | Media;
   content: {
     root: {
@@ -742,8 +760,29 @@ export interface Form {
 export interface University {
   id: string;
   title: string;
-  universityImage?: (string | null) | Media;
-  content: {
+  image?: (string | null) | Media;
+  'short Description': string;
+  'Download Brochure'?: (string | null) | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  courses?: (string | Course)[] | null;
+  'similar universities'?: (string | University)[] | null;
+  countries?: (string | Country)[] | null;
+  'Admission title'?: string | null;
+  'admission description': {
     root: {
       type: string;
       children: {
@@ -758,8 +797,21 @@ export interface University {
     };
     [k: string]: unknown;
   };
-  courses?: (string | Course)[] | null;
-  countries?: (string | Country)[] | null;
+  'key feature list'?:
+    | {
+        title?: string | null;
+        value?: string | null;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  'Faq list'?:
+    | {
+        question?: string | null;
+        answer?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -829,8 +881,14 @@ export interface Course {
 export interface Country {
   id: string;
   title: string;
-  heroImage?: (string | null) | Media;
-  content: {
+  description?: string | null;
+  Banner?: (string | null) | Media;
+  'Heading 1'?: string | null;
+  'Description 1'?: string | null;
+  link?: string | null;
+  universities?: (string | University)[] | null;
+  'Heading 2'?: string | null;
+  'Description 2': {
     root: {
       type: string;
       children: {
@@ -845,8 +903,32 @@ export interface Country {
     };
     [k: string]: unknown;
   };
+  'link 2'?: string | null;
+  'Admission Requirement Heading'?: string | null;
+  'Admission Requirement Descripton'?: string | null;
+  'key feature list'?:
+    | {
+        title?: string | null;
+        value?: string | null;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  'Admission requirement'?:
+    | {
+        title?: string | null;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  'Faq list'?:
+    | {
+        question?: string | null;
+        answer?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -868,6 +950,33 @@ export interface Country {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  name: string;
+  designation: string;
+  description?: string | null;
+  image?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: string;
+  name: string;
+  designation: string;
+  description?: string | null;
+  image?: (string | null) | Media;
+  events?: (string | null) | Event;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1284,6 +1393,10 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  'short description'?: T;
+  image?: T;
+  location?: T;
+  description?: T;
   heroImage?: T;
   content?: T;
   relatedPosts?: T;
@@ -1315,10 +1428,30 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface UniversitiesSelect<T extends boolean = true> {
   title?: T;
-  universityImage?: T;
+  image?: T;
+  'short Description'?: T;
+  'Download Brochure'?: T;
   content?: T;
   courses?: T;
+  'similar universities'?: T;
   countries?: T;
+  'Admission title'?: T;
+  'admission description'?: T;
+  'key feature list'?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+        image?: T;
+        id?: T;
+      };
+  'Faq list'?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   meta?:
     | T
     | {
@@ -1339,10 +1472,40 @@ export interface UniversitiesSelect<T extends boolean = true> {
  */
 export interface CountriesSelect<T extends boolean = true> {
   title?: T;
-  heroImage?: T;
-  content?: T;
+  description?: T;
+  Banner?: T;
+  'Heading 1'?: T;
+  'Description 1'?: T;
+  link?: T;
+  universities?: T;
+  'Heading 2'?: T;
+  'Description 2'?: T;
+  'link 2'?: T;
+  'Admission Requirement Heading'?: T;
+  'Admission Requirement Descripton'?: T;
+  'key feature list'?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+        image?: T;
+        id?: T;
+      };
+  'Admission requirement'?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        id?: T;
+      };
+  'Faq list'?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   relatedPosts?: T;
-  categories?: T;
   meta?:
     | T
     | {
