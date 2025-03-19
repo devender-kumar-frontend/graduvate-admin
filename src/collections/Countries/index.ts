@@ -42,7 +42,6 @@ export const Countries: CollectionConfig<'countries'> = {
   defaultPopulate: {
     title: true,
     slug: true,
-    categories: true,
     meta: {
       image: true,
       description: true,
