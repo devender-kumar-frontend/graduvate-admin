@@ -882,13 +882,13 @@ export interface Country {
   id: string;
   title: string;
   description?: string | null;
-  Banner?: (string | null) | Media;
-  'Heading 1'?: string | null;
-  'Description 1'?: string | null;
+  banner?: (string | null) | Media;
+  heading1?: string | null;
+  description1?: string | null;
   link?: string | null;
   universities?: (string | University)[] | null;
-  'Heading 2'?: string | null;
-  'Description 2': {
+  heading2?: string | null;
+  description2?: {
     root: {
       type: string;
       children: {
@@ -902,11 +902,11 @@ export interface Country {
       version: number;
     };
     [k: string]: unknown;
-  };
-  'link 2'?: string | null;
-  'Admission Requirement Heading'?: string | null;
-  'Admission Requirement Descripton'?: string | null;
-  'key feature list'?:
+  } | null;
+  link2?: string | null;
+  admissionRequirementHeading?: string | null;
+  admissionRequirementDescripton?: string | null;
+  keyFeatureList?:
     | {
         title?: string | null;
         value?: string | null;
@@ -914,14 +914,14 @@ export interface Country {
         id?: string | null;
       }[]
     | null;
-  'Admission requirement'?:
+  admissionRequirement?:
     | {
         title?: string | null;
         image?: (string | null) | Media;
         id?: string | null;
       }[]
     | null;
-  'Faq list'?:
+  faqList?:
     | {
         question?: string | null;
         answer?: string | null;
@@ -929,6 +929,7 @@ export interface Country {
       }[]
     | null;
   relatedPosts?: (string | Post)[] | null;
+  flagImage?: (string | null) | Media;
   meta?: {
     title?: string | null;
     /**
@@ -1473,17 +1474,17 @@ export interface UniversitiesSelect<T extends boolean = true> {
 export interface CountriesSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  Banner?: T;
-  'Heading 1'?: T;
-  'Description 1'?: T;
+  banner?: T;
+  heading1?: T;
+  description1?: T;
   link?: T;
   universities?: T;
-  'Heading 2'?: T;
-  'Description 2'?: T;
-  'link 2'?: T;
-  'Admission Requirement Heading'?: T;
-  'Admission Requirement Descripton'?: T;
-  'key feature list'?:
+  heading2?: T;
+  description2?: T;
+  link2?: T;
+  admissionRequirementHeading?: T;
+  admissionRequirementDescripton?: T;
+  keyFeatureList?:
     | T
     | {
         title?: T;
@@ -1491,14 +1492,14 @@ export interface CountriesSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
-  'Admission requirement'?:
+  admissionRequirement?:
     | T
     | {
         title?: T;
         image?: T;
         id?: T;
       };
-  'Faq list'?:
+  faqList?:
     | T
     | {
         question?: T;
@@ -1506,6 +1507,7 @@ export interface CountriesSelect<T extends boolean = true> {
         id?: T;
       };
   relatedPosts?: T;
+  flagImage?: T;
   meta?:
     | T
     | {
