@@ -16,12 +16,13 @@ import { Posts } from './collections/Posts'
 import { Universities } from './collections/Universities'
 import { Users } from './collections/Users'
 
+import { Events } from './collections/Events'
+import { Testimonials } from './collections/Testimonials'
+import { CommonSettings } from './CommonSettings/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
-import { Events } from './collections/Events'
-import { Testimonials } from './collections/Testimonials'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -81,7 +82,7 @@ export default buildConfig({
     Testimonials,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, CommonSettings],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
