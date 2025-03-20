@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'common-settings': CommonSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'common-settings': CommonSettingsSelect<false> | CommonSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -2027,6 +2029,25 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "common-settings".
+ */
+export interface CommonSetting {
+  id: string;
+  countryCtaHeading?: string | null;
+  countryCtaDescription?: string | null;
+  countryCtaText?: string | null;
+  countryCtaLink?: string | null;
+  countryFaqHeading?: string | null;
+  countryFaqDescription?: string | null;
+  countryFaqPhone?: string | null;
+  countryFaqEmail?: string | null;
+  countryBlogHeading?: string | null;
+  countryBlogDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2067,6 +2088,25 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "common-settings_select".
+ */
+export interface CommonSettingsSelect<T extends boolean = true> {
+  countryCtaHeading?: T;
+  countryCtaDescription?: T;
+  countryCtaText?: T;
+  countryCtaLink?: T;
+  countryFaqHeading?: T;
+  countryFaqDescription?: T;
+  countryFaqPhone?: T;
+  countryFaqEmail?: T;
+  countryBlogHeading?: T;
+  countryBlogDescription?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
