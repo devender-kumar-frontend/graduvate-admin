@@ -76,38 +76,45 @@ export const Countries: CollectionConfig<'countries'> = {
           fields: [
             {
               name: 'title',
+              label: 'Title',
               type: 'text',
               required: true,
             },
 
             {
               name: 'description',
+              label: 'Description',
               type: 'text',
               required: false,
             },
             {
-              name: 'Banner',
+              name: 'banner',
+              label: 'Banner',
               type: 'upload',
               relationTo: 'media',
             },
 
             {
-              name: 'Heading 1',
+              name: 'heading1',
+              label: 'Heading 1',
               type: 'text',
               required: false,
             },
             {
-              name: 'Description 1',
+              name: 'description1',
+              label: 'Description 1',
               type: 'textarea',
               required: false,
             },
             {
               name: 'link',
+              label: 'Link',
               type: 'text',
               required: false,
             },
             {
               name: 'universities',
+              label: 'Universities',
               type: 'relationship',
               admin: {
                 position: 'sidebar',
@@ -117,12 +124,14 @@ export const Countries: CollectionConfig<'countries'> = {
             },
 
             {
-              name: 'Heading 2',
+              name: 'heading2',
+              label: 'Heading 2',
               type: 'text',
               required: false,
             },
             {
-              name: 'Description 2',
+              name: 'description2',
+              label: 'Description 2',
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -136,21 +145,23 @@ export const Countries: CollectionConfig<'countries'> = {
                   ]
                 },
               }),
-              label: false,
-              required: true,
+              required: false,
             },
             {
-              name: 'link 2',
+              name: 'link2',
+              label: 'Link 2',
               type: 'text',
               required: false,
             },
             {
-              name: 'Admission Requirement Heading',
+              name: 'admissionRequirementHeading',
+              label: 'Admission Requirement Heading',
               type: 'text',
               required: false,
             },
             {
-              name: 'Admission Requirement Descripton',
+              name: 'admissionRequirementDescripton',
+              label: 'Admission Requirement Descripton',
               type: 'textarea',
               required: false,
             },
@@ -161,9 +172,9 @@ export const Countries: CollectionConfig<'countries'> = {
         {
           fields: [
             {
-              name: 'key feature list',
+              name: 'keyFeatureList',
               type: 'array',
-              label: 'key feature',
+              label: 'Key Feature',
               minRows: 2,
               maxRows: 10,
               labels: {
@@ -194,9 +205,9 @@ export const Countries: CollectionConfig<'countries'> = {
         {
           fields: [
             {
-              name: 'Admission requirement',
+              name: 'admissionRequirement',
               type: 'array',
-              label: 'admission feature',
+              label: 'Admission Feature',
               minRows: 2,
               maxRows: 10,
               labels: {
@@ -217,19 +228,19 @@ export const Countries: CollectionConfig<'countries'> = {
               ],
             },
           ],
-          label: 'Admission requirement list',
+          label: 'Admission Requirement List',
         },
 
         {
           fields: [
             {
-              name: 'Faq list',
+              name: 'faqList',
               type: 'array',
-              label: 'faq list',
+              label: 'Faq List',
               minRows: 2,
               maxRows: 10,
               labels: {
-                singular: 'faq',
+                singular: 'Faq',
                 plural: 'faqs',
               },
               fields: [
@@ -244,7 +255,7 @@ export const Countries: CollectionConfig<'countries'> = {
               ],
             },
           ],
-          label: 'Faqs list',
+          label: 'Faqs List',
         },
         {
           fields: [
@@ -263,6 +274,12 @@ export const Countries: CollectionConfig<'countries'> = {
               },
               hasMany: true,
               relationTo: 'posts',
+            },
+            {
+              name: 'flagImage',
+              label: 'Flag Image',
+              type: 'upload',
+              relationTo: 'media',
             },
           ],
           label: 'Meta',
