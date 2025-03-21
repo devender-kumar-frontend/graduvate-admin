@@ -228,8 +228,7 @@ export interface Post {
   id: string;
   title: string;
   shortDescription?: string | null;
-  thumbnail?: (string | null) | Media;
-  banner?: (string | null) | Media;
+  blogImage?: (string | null) | Media;
   content?: {
     root: {
       type: string;
@@ -1398,8 +1397,7 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   shortDescription?: T;
-  thumbnail?: T;
-  banner?: T;
+  blogImage?: T;
   content?: T;
   relatedPosts?: T;
   categories?: T;
