@@ -18,6 +18,7 @@ import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 
+import { slugField } from '@/fields/slug'
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -25,7 +26,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { slugField } from '@/fields/slug'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -70,58 +70,31 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-
-    {
-      name: 'short description',
-      type: 'textarea',
-      required: false,
-    },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-    },
-    {
-      name: 'location',
-      type: 'text',
-      required: false,
-    },
-    {
-      name: 'description',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-            HorizontalRuleFeature(),
-          ]
-        },
-      }),
-      label: false,
-      required: true,
-    },
-
-    {
       type: 'tabs',
       tabs: [
         {
           fields: [
             {
-              name: 'heroImage',
+              name: 'title',
+              type: 'text',
+              required: true,
+            },
+
+            {
+              name: 'shortDescription',
+              label: 'Short Description',
+              type: 'textarea',
+              required: false,
+            },
+            {
+              name: 'blogImage',
+              label: 'Blog Image',
               type: 'upload',
               relationTo: 'media',
             },
             {
               name: 'content',
+              label: 'Full Description',
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -135,8 +108,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   ]
                 },
               }),
-              label: false,
-              required: true,
+              required: false,
             },
           ],
           label: 'Content',
