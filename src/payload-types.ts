@@ -228,7 +228,7 @@ export interface Post {
   'short description'?: string | null;
   image?: (string | null) | Media;
   location?: string | null;
-  description: {
+  description?: {
     root: {
       type: string;
       children: {
