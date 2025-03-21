@@ -2033,14 +2033,14 @@ export interface Footer {
  */
 export interface CommonSetting {
   id: string;
+  faqSectionHeading?: string | null;
+  faqSectionDescription?: string | null;
+  faqSectionPhone?: string | null;
+  faqSectionEmail?: string | null;
   countryCtaHeading?: string | null;
   countryCtaDescription?: string | null;
   countryCtaText?: string | null;
   countryCtaLink?: string | null;
-  countryFaqHeading?: string | null;
-  countryFaqDescription?: string | null;
-  countryFaqPhone?: string | null;
-  countryFaqEmail?: string | null;
   countryBlogHeading?: string | null;
   countryBlogDescription?: string | null;
   updatedAt?: string | null;
@@ -2097,14 +2097,14 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "common-settings_select".
  */
 export interface CommonSettingsSelect<T extends boolean = true> {
+  faqSectionHeading?: T;
+  faqSectionDescription?: T;
+  faqSectionPhone?: T;
+  faqSectionEmail?: T;
   countryCtaHeading?: T;
   countryCtaDescription?: T;
   countryCtaText?: T;
   countryCtaLink?: T;
-  countryFaqHeading?: T;
-  countryFaqDescription?: T;
-  countryFaqPhone?: T;
-  countryFaqEmail?: T;
   countryBlogHeading?: T;
   countryBlogDescription?: T;
   updatedAt?: T;

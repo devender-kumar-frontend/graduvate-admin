@@ -10,67 +10,77 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Country CTA Section',
+          label: 'FAQ Section',
           fields: [
             {
-              name: 'countryCtaHeading',
+              name: 'faqSectionHeading',
               label: 'Heading',
               type: 'text',
             },
             {
-              name: 'countryCtaDescription',
+              name: 'faqSectionDescription',
               label: 'Description',
               type: 'textarea',
             },
             {
-              name: 'countryCtaText',
-              label: 'CTA Text',
-              type: 'text',
-            },
-            {
-              name: 'countryCtaLink',
-              label: 'CTA Link',
-              type: 'text',
-            },
-          ],
-        },
-        {
-          label: 'Country Faq Section',
-          fields: [
-            {
-              name: 'countryFaqHeading',
-              label: 'Heading',
-              type: 'text',
-            },
-            {
-              name: 'countryFaqDescription',
-              label: 'Description',
-              type: 'textarea',
-            },
-            {
-              name: 'countryFaqPhone',
+              name: 'faqSectionPhone',
               label: 'Phone',
               type: 'text',
             },
             {
-              name: 'countryFaqEmail',
+              name: 'faqSectionEmail',
               label: 'Email',
               type: 'text',
             },
           ],
         },
         {
-          label: 'Country Blog Section',
+          label: 'Country Section',
           fields: [
             {
-              name: 'countryBlogHeading',
-              label: 'Heading',
-              type: 'text',
-            },
-            {
-              name: 'countryBlogDescription',
-              label: 'Description',
-              type: 'textarea',
+              type: 'tabs',
+              tabs: [
+                {
+                  label: 'Country CTA Section',
+                  fields: [
+                    {
+                      name: 'countryCtaHeading',
+                      label: 'Heading',
+                      type: 'text',
+                    },
+                    {
+                      name: 'countryCtaDescription',
+                      label: 'Description',
+                      type: 'textarea',
+                    },
+                    {
+                      name: 'countryCtaText',
+                      label: 'CTA Text',
+                      type: 'text',
+                    },
+                    {
+                      name: 'countryCtaLink',
+                      label: 'CTA Link',
+                      type: 'text',
+                    },
+                  ],
+                },
+                {
+                  label: 'Country Blog Section',
+                  fields: [
+                    {
+                      name: 'countryBlogHeading',
+                      label: 'Heading',
+                      type: 'text',
+                    },
+                    {
+                      name: 'countryBlogDescription',
+                      label: 'Description',
+                      type: 'textarea',
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
