@@ -975,8 +975,10 @@ export interface Faq {
   id: string;
   question: string;
   answer: string;
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1721,8 +1723,10 @@ export interface TestimonialsSelect<T extends boolean = true> {
 export interface FaqsSelect<T extends boolean = true> {
   question?: T;
   answer?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2147,6 +2151,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'courses';
           value: string | Course;
+        } | null)
+      | ({
+          relationTo: 'faqs';
+          value: string | Faq;
         } | null);
     global?: string | null;
     user?: (string | null) | User;
