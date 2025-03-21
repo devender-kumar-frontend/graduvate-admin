@@ -24,6 +24,8 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 
+import { Faqs } from './collections/Faqs'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -80,6 +82,7 @@ export default buildConfig({
     Users,
     Events,
     Testimonials,
+    Faqs,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, CommonSettings],

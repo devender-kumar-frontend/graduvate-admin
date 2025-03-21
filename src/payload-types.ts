@@ -76,6 +76,7 @@ export interface Config {
     users: User;
     events: Event;
     testimonials: Testimonial;
+    faqs: Faq;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -97,6 +98,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -225,10 +227,10 @@ export interface Page {
 export interface Post {
   id: string;
   title: string;
-  'short description'?: string | null;
-  image?: (string | null) | Media;
-  location?: string | null;
-  description: {
+  shortDescription?: string | null;
+  thumbnail?: (string | null) | Media;
+  banner?: (string | null) | Media;
+  content?: {
     root: {
       type: string;
       children: {
@@ -242,23 +244,7 @@ export interface Post {
       version: number;
     };
     [k: string]: unknown;
-  };
-  heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  } | null;
   relatedPosts?: (string | Post)[] | null;
   categories?: (string | Category)[] | null;
   meta?: {
@@ -983,6 +969,17 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: string;
+  question: string;
+  answer: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1194,6 +1191,10 @@ export interface PayloadLockedDocument {
         value: string | Testimonial;
       } | null)
     | ({
+        relationTo: 'faqs';
+        value: string | Faq;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -1396,11 +1397,9 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
-  'short description'?: T;
-  image?: T;
-  location?: T;
-  description?: T;
-  heroImage?: T;
+  shortDescription?: T;
+  thumbnail?: T;
+  banner?: T;
   content?: T;
   relatedPosts?: T;
   categories?: T;
@@ -1713,6 +1712,16 @@ export interface TestimonialsSelect<T extends boolean = true> {
   description?: T;
   image?: T;
   events?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
   updatedAt?: T;
   createdAt?: T;
 }
