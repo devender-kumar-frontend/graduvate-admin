@@ -281,6 +281,11 @@ export const Countries: CollectionConfig<'countries'> = {
               type: 'upload',
               relationTo: 'media',
             },
+            {
+              name: 'menuName',
+              label: 'Menu Name',
+              type: 'text',
+            },
           ],
           label: 'Meta',
         },

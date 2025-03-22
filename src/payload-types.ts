@@ -229,7 +229,6 @@ export interface Post {
   title: string;
   shortDescription?: string | null;
   blogImage?: (string | null) | Media;
-  heroImage?:any;
   content?: {
     root: {
       type: string;
@@ -785,6 +784,13 @@ export interface University {
     };
     [k: string]: unknown;
   };
+  tutionFees?: number | null;
+  qsRank?: number | null;
+  costOfLiving?: number | null;
+  acceptance?: number | null;
+  employability?: number | null;
+  location?: string | null;
+  universityLogo?: (string | null) | Media;
   'key feature list'?:
     | {
         title?: string | null;
@@ -918,6 +924,7 @@ export interface Country {
     | null;
   relatedPosts?: (string | Post)[] | null;
   flagImage?: (string | null) | Media;
+  menuName?: string | null;
   meta?: {
     title?: string | null;
     /**
@@ -1440,6 +1447,13 @@ export interface UniversitiesSelect<T extends boolean = true> {
   countries?: T;
   'Admission title'?: T;
   'admission description'?: T;
+  tutionFees?: T;
+  qsRank?: T;
+  costOfLiving?: T;
+  acceptance?: T;
+  employability?: T;
+  location?: T;
+  universityLogo?: T;
   'key feature list'?:
     | T
     | {
@@ -1510,6 +1524,7 @@ export interface CountriesSelect<T extends boolean = true> {
       };
   relatedPosts?: T;
   flagImage?: T;
+  menuName?: T;
   meta?:
     | T
     | {

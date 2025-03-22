@@ -43,6 +43,14 @@ export const Universities: CollectionConfig<'universities'> = {
     title: true,
     slug: true,
     countries: true,
+    tutionFees: true,
+    qsRank: true,
+    costOfLiving: true,
+    acceptance: true,
+    employability: true,
+    location: true,
+    courses: true,
+    universityLogo: true,
     meta: {
       image: true,
       description: true,
@@ -92,13 +100,11 @@ export const Universities: CollectionConfig<'universities'> = {
               type: 'textarea',
               required: true,
             },
-
             {
               name: 'Download Brochure',
               type: 'upload',
               relationTo: 'media',
             },
-
             {
               name: 'content',
               type: 'richText',
@@ -171,6 +177,47 @@ export const Universities: CollectionConfig<'universities'> = {
             },
           ],
           label: 'Overview',
+        },
+        {
+          label: 'Block Info',
+          fields: [
+            {
+              name: 'tutionFees',
+              label: 'Tuition Fees ($)',
+              type: 'number',
+            },
+            {
+              name: 'qsRank',
+              label: 'QS Rank',
+              type: 'number',
+            },
+            {
+              name: 'costOfLiving',
+              label: 'Cost of Living',
+              type: 'number',
+            },
+            {
+              name: 'acceptance',
+              label: 'Acceptance %',
+              type: 'number',
+            },
+            {
+              name: 'employability',
+              label: 'Employability %',
+              type: 'number',
+            },
+            {
+              name: 'location',
+              label: 'Location',
+              type: 'text',
+            },
+            {
+              name: 'universityLogo',
+              label: 'University Logo',
+              type: 'upload',
+              relationTo: 'media',
+            },
+          ],
         },
         {
           fields: [
