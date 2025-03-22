@@ -229,6 +229,7 @@ export interface Post {
   title: string;
   shortDescription?: string | null;
   blogImage?: (string | null) | Media;
+  heroImage?:any;
   content?: {
     root: {
       type: string;
