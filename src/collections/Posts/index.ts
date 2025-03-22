@@ -44,6 +44,7 @@ export const Posts: CollectionConfig<'posts'> = {
     shortDescription: true,
     blogImage: true,
     categories: true,
+    createdAt: true,
     meta: {
       image: true,
       description: true,
