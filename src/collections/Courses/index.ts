@@ -1,19 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import { slugField } from '@/fields/slug'
@@ -42,7 +30,14 @@ export const Courses: CollectionConfig<'courses'> = {
   defaultPopulate: {
     title: true,
     slug: true,
-    categories: true,
+    courseImage: true,
+    content: true,
+    fees: true,
+    duration: true,
+    qualification: true,
+    courseLevel: true,
+    qualification2: true,
+    intakes: true,
     meta: {
       image: true,
       description: true,
@@ -81,27 +76,13 @@ export const Courses: CollectionConfig<'courses'> = {
         {
           fields: [
             {
-              name: 'heroImage',
+              name: 'courseImage',
               type: 'upload',
               relationTo: 'media',
             },
             {
               name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
-                  ]
-                },
-              }),
-              label: false,
-              required: true,
+              type: 'textarea',
             },
           ],
           label: 'Content',
@@ -109,32 +90,32 @@ export const Courses: CollectionConfig<'courses'> = {
         {
           fields: [
             {
-              name: 'relatedPosts',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              filterOptions: ({ id }) => {
-                return {
-                  id: {
-                    not_in: [id],
-                  },
-                }
-              },
-              hasMany: true,
-              relationTo: 'posts',
+              name: 'fees',
+              type: 'text',
             },
             {
-              name: 'categories',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'categories',
+              name: 'duration',
+              type: 'text',
+            },
+            {
+              name: 'qualification',
+              type: 'text',
+            },
+            {
+              name: 'courseLevel',
+              type: 'text',
+            },
+            {
+              name: 'qualification2',
+              label: 'Qualification',
+              type: 'text',
+            },
+            {
+              name: 'intakes',
+              type: 'text',
             },
           ],
-          label: 'Meta',
+          label: 'Course Info',
         },
         {
           name: 'meta',
@@ -185,39 +166,9 @@ export const Courses: CollectionConfig<'courses'> = {
         ],
       },
     },
-    {
-      name: 'authors',
-      type: 'relationship',
-      admin: {
-        position: 'sidebar',
-      },
-      hasMany: true,
-      relationTo: 'users',
-    },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
-    {
-      name: 'populatedAuthors',
-      type: 'array',
-      access: {
-        update: () => false,
-      },
-      admin: {
-        disabled: true,
-        readOnly: true,
-      },
-      fields: [
-        {
-          name: 'id',
-          type: 'text',
-        },
-        {
-          name: 'name',
-          type: 'text',
-        },
-      ],
-    },
     ...slugField(),
   ],
   hooks: {

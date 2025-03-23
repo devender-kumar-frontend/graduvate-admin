@@ -749,6 +749,7 @@ export interface University {
   title: string;
   image?: (string | null) | Media;
   shortDescription: string;
+  establishText?: string | null;
   downloadBrochure?: (string | null) | Media;
   content?: {
     root: {
@@ -812,7 +813,7 @@ export interface University {
   } | null;
   courses?: (string | Course)[] | null;
   admissionTitle?: string | null;
-  admissionDescription: {
+  admissionDescription?: {
     root: {
       type: string;
       children: {
@@ -826,7 +827,7 @@ export interface University {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   admissionInfoList?:
     | {
         title?: string | null;
@@ -931,13 +932,6 @@ export interface Country {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -951,24 +945,14 @@ export interface Country {
 export interface Course {
   id: string;
   title: string;
-  heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
+  courseImage?: (string | null) | Media;
+  content?: string | null;
+  fees?: string | null;
+  duration?: string | null;
+  qualification?: string | null;
+  courseLevel?: string | null;
+  qualification2?: string | null;
+  intakes?: string | null;
   meta?: {
     title?: string | null;
     /**
@@ -978,13 +962,6 @@ export interface Course {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1484,6 +1461,7 @@ export interface UniversitiesSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   shortDescription?: T;
+  establishText?: T;
   downloadBrochure?: T;
   content?: T;
   youtubeVideoId?: T;
@@ -1593,13 +1571,6 @@ export interface CountriesSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
-  authors?: T;
-  populatedAuthors?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -1725,10 +1696,14 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface CoursesSelect<T extends boolean = true> {
   title?: T;
-  heroImage?: T;
+  courseImage?: T;
   content?: T;
-  relatedPosts?: T;
-  categories?: T;
+  fees?: T;
+  duration?: T;
+  qualification?: T;
+  courseLevel?: T;
+  qualification2?: T;
+  intakes?: T;
   meta?:
     | T
     | {
@@ -1737,13 +1712,6 @@ export interface CoursesSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
-  authors?: T;
-  populatedAuthors?:
-    | T
-    | {
-        id?: T;
-        name?: T;
-      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
