@@ -25,7 +25,6 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { revalidateDelete } from '../Pages/hooks/revalidatePage'
-import { populateAuthors } from '../Posts/hooks/populateAuthors'
 import { revalidatePost } from '../Posts/hooks/revalidatePost'
 
 export const Universities: CollectionConfig<'universities'> = {
@@ -99,6 +98,10 @@ export const Universities: CollectionConfig<'universities'> = {
               required: true,
             },
             {
+              name: 'establishText',
+              type: 'text',
+            },
+            {
               name: 'downloadBrochure',
               label: 'Download Brochure',
               type: 'upload',
@@ -152,11 +155,11 @@ export const Universities: CollectionConfig<'universities'> = {
                     const similarUniversities = await req.payload.find({
                       collection: 'universities',
                       where: {
-                        category: {
-                          equals: currentUniversity?.countries,
-                        },
                         id: {
                           not_in: [currentUniversity?.id],
+                        },
+                        countries: {
+                          in: currentUniversity?.countries || [],
                         },
                       },
                       limit: 3,
@@ -291,13 +294,12 @@ export const Universities: CollectionConfig<'universities'> = {
                   ]
                 },
               }),
-              required: true,
             },
             {
               name: 'admissionInfoList',
               label: 'Admission Info List',
               type: 'array',
-              minRows: 1,
+              minRows: 0,
               labels: {
                 singular: 'Admission Info',
                 plural: 'admissionInfoLists',
@@ -454,7 +456,6 @@ export const Universities: CollectionConfig<'universities'> = {
   ],
   hooks: {
     afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
   },
   versions: {
