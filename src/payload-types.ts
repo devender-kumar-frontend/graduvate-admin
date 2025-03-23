@@ -748,8 +748,8 @@ export interface University {
   id: string;
   title: string;
   image?: (string | null) | Media;
-  'short Description': string;
-  'Download Brochure'?: (string | null) | Media;
+  shortDescription: string;
+  downloadBrochure?: (string | null) | Media;
   content?: {
     root: {
       type: string;
@@ -765,11 +765,54 @@ export interface University {
     };
     [k: string]: unknown;
   } | null;
-  courses?: (string | Course)[] | null;
-  'similar universities'?: (string | University)[] | null;
+  youtubeVideoId?: string | null;
   countries?: (string | Country)[] | null;
-  'Admission title'?: string | null;
-  'admission description': {
+  similarUniversities?: (string | University)[] | null;
+  rankingTitle?: string | null;
+  rankingDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  internationalStudentIntakeTitle?: string | null;
+  internationalStudentIntake?: number | null;
+  rankingList?:
+    | {
+        year?: string | null;
+        qaRank?: string | null;
+        usNewsRanks?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  courseTitle?: string | null;
+  courseDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  courses?: (string | Course)[] | null;
+  admissionTitle?: string | null;
+  admissionDescription: {
     root: {
       type: string;
       children: {
@@ -784,6 +827,13 @@ export interface University {
     };
     [k: string]: unknown;
   };
+  admissionInfoList?:
+    | {
+        title?: string | null;
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   tutionFees?: number | null;
   qsRank?: number | null;
   costOfLiving?: number | null;
@@ -791,18 +841,12 @@ export interface University {
   employability?: number | null;
   location?: string | null;
   universityLogo?: (string | null) | Media;
-  'key feature list'?:
+  keyFeatureList?:
     | {
         title?: string | null;
         value?: string | null;
         image?: (string | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
-  'Faq list'?:
-    | {
-        question?: string | null;
-        answer?: string | null;
+        blockBgColor?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -815,53 +859,6 @@ export interface University {
     description?: string | null;
   };
   publishedAt?: string | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
-export interface Course {
-  id: string;
-  title: string;
-  heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  authors?: (string | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -925,6 +922,53 @@ export interface Country {
   relatedPosts?: (string | Post)[] | null;
   flagImage?: (string | null) | Media;
   menuName?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: string;
+  title: string;
+  heroImage?: (string | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  relatedPosts?: (string | Post)[] | null;
+  categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -1439,14 +1483,36 @@ export interface PostsSelect<T extends boolean = true> {
 export interface UniversitiesSelect<T extends boolean = true> {
   title?: T;
   image?: T;
-  'short Description'?: T;
-  'Download Brochure'?: T;
+  shortDescription?: T;
+  downloadBrochure?: T;
   content?: T;
-  courses?: T;
-  'similar universities'?: T;
+  youtubeVideoId?: T;
   countries?: T;
-  'Admission title'?: T;
-  'admission description'?: T;
+  similarUniversities?: T;
+  rankingTitle?: T;
+  rankingDescription?: T;
+  internationalStudentIntakeTitle?: T;
+  internationalStudentIntake?: T;
+  rankingList?:
+    | T
+    | {
+        year?: T;
+        qaRank?: T;
+        usNewsRanks?: T;
+        id?: T;
+      };
+  courseTitle?: T;
+  courseDescription?: T;
+  courses?: T;
+  admissionTitle?: T;
+  admissionDescription?: T;
+  admissionInfoList?:
+    | T
+    | {
+        title?: T;
+        value?: T;
+        id?: T;
+      };
   tutionFees?: T;
   qsRank?: T;
   costOfLiving?: T;
@@ -1454,19 +1520,13 @@ export interface UniversitiesSelect<T extends boolean = true> {
   employability?: T;
   location?: T;
   universityLogo?: T;
-  'key feature list'?:
+  keyFeatureList?:
     | T
     | {
         title?: T;
         value?: T;
         image?: T;
-        id?: T;
-      };
-  'Faq list'?:
-    | T
-    | {
-        question?: T;
-        answer?: T;
+        blockBgColor?: T;
         id?: T;
       };
   meta?:

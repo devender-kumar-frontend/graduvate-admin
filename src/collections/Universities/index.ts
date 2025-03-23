@@ -42,7 +42,6 @@ export const Universities: CollectionConfig<'universities'> = {
   defaultPopulate: {
     title: true,
     slug: true,
-    countries: true,
     tutionFees: true,
     qsRank: true,
     costOfLiving: true,
@@ -88,20 +87,20 @@ export const Universities: CollectionConfig<'universities'> = {
               type: 'text',
               required: true,
             },
-
             {
               name: 'image',
               type: 'upload',
               relationTo: 'media',
             },
-
             {
-              name: 'short Description',
+              name: 'shortDescription',
+              label: 'Short Description',
               type: 'textarea',
               required: true,
             },
             {
-              name: 'Download Brochure',
+              name: 'downloadBrochure',
+              label: 'Download Brochure',
               type: 'upload',
               relationTo: 'media',
             },
@@ -120,30 +119,16 @@ export const Universities: CollectionConfig<'universities'> = {
                   ]
                 },
               }),
-              label: false,
               required: false,
             },
             {
-              name: 'courses',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'courses',
-            },
-
-            {
-              name: 'similar universities',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'universities',
+              name: 'youtubeVideoId',
+              label: 'Youtube Video Id',
+              type: 'text',
             },
             {
               name: 'countries',
+              label: 'Country',
               type: 'relationship',
               admin: {
                 position: 'sidebar',
@@ -151,14 +136,50 @@ export const Universities: CollectionConfig<'universities'> = {
               hasMany: true,
               relationTo: 'countries',
             },
-
             {
-              name: 'Admission title',
+              name: 'similarUniversities',
+              label: 'Similar Universities',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: true,
+              relationTo: 'universities',
+              hooks: {
+                beforeChange: [
+                  async ({ data, req }) => {
+                    const currentUniversity = data
+                    const similarUniversities = await req.payload.find({
+                      collection: 'universities',
+                      where: {
+                        category: {
+                          equals: currentUniversity?.countries,
+                        },
+                        id: {
+                          not_in: [currentUniversity?.id],
+                        },
+                      },
+                      limit: 3,
+                    })
+                    return similarUniversities.docs.map((universities) => universities.id)
+                  },
+                ],
+              },
+            },
+          ],
+          label: 'Overview',
+        },
+        {
+          label: 'Ranking',
+          fields: [
+            {
+              name: 'rankingTitle',
+              label: 'Title',
               type: 'text',
-              required: false,
             },
             {
-              name: 'admission description',
+              name: 'rankingDescription',
+              label: 'Description',
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -172,11 +193,132 @@ export const Universities: CollectionConfig<'universities'> = {
                   ]
                 },
               }),
-              label: false,
-              required: true,
+            },
+            {
+              name: 'internationalStudentIntakeTitle',
+              label: 'Progress Title',
+              type: 'text',
+            },
+            {
+              name: 'internationalStudentIntake',
+              label: 'Progress %',
+              type: 'number',
+            },
+            {
+              name: 'rankingList',
+              label: 'Ranking List',
+              type: 'array',
+              minRows: 1,
+              labels: {
+                singular: 'rankingList',
+                plural: 'rankingLists',
+              },
+              fields: [
+                {
+                  name: 'year',
+                  type: 'text',
+                },
+                {
+                  name: 'qaRank',
+                  type: 'text',
+                },
+                {
+                  name: 'usNewsRanks',
+                  type: 'text',
+                },
+              ],
             },
           ],
-          label: 'Overview',
+        },
+        {
+          label: 'Courses Section',
+          fields: [
+            {
+              name: 'courseTitle',
+              label: 'Title',
+              type: 'text',
+            },
+            {
+              name: 'courseDescription',
+              label: 'Description',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => {
+                  return [
+                    ...rootFeatures,
+                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    FixedToolbarFeature(),
+                    InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                  ]
+                },
+              }),
+            },
+            {
+              name: 'courses',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: true,
+              relationTo: 'courses',
+            },
+          ],
+        },
+        {
+          label: 'Admission Section',
+          fields: [
+            {
+              name: 'admissionTitle',
+              label: 'Admission Title',
+              type: 'text',
+              required: false,
+            },
+            {
+              label: 'Admission Description',
+              name: 'admissionDescription',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => {
+                  return [
+                    ...rootFeatures,
+                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    FixedToolbarFeature(),
+                    InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                  ]
+                },
+              }),
+              required: true,
+            },
+            {
+              name: 'admissionInfoList',
+              label: 'Admission Info List',
+              type: 'array',
+              minRows: 1,
+              labels: {
+                singular: 'Admission Info',
+                plural: 'admissionInfoLists',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'title',
+                      type: 'text',
+                    },
+                    {
+                      name: 'value',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
         {
           label: 'Block Info',
@@ -222,9 +364,9 @@ export const Universities: CollectionConfig<'universities'> = {
         {
           fields: [
             {
-              name: 'key feature list',
+              name: 'keyFeatureList',
+              label: 'Key Feature List',
               type: 'array',
-              label: 'key feature',
               minRows: 2,
               maxRows: 10,
               labels: {
@@ -246,39 +388,16 @@ export const Universities: CollectionConfig<'universities'> = {
                   relationTo: 'media',
                   required: false,
                 },
+                {
+                  name: 'blockBgColor',
+                  label: 'Add Background Color (HEX Code)',
+                  type: 'text',
+                },
               ],
             },
           ],
           label: 'Key Factors',
         },
-
-        {
-          fields: [
-            {
-              name: 'Faq list',
-              type: 'array',
-              label: 'faq list',
-              minRows: 2,
-              maxRows: 10,
-              labels: {
-                singular: 'faq',
-                plural: 'faqs',
-              },
-              fields: [
-                {
-                  name: 'question',
-                  type: 'text',
-                },
-                {
-                  name: 'answer',
-                  type: 'textarea',
-                },
-              ],
-            },
-          ],
-          label: 'Faqs list',
-        },
-
         {
           name: 'meta',
           label: 'SEO',
