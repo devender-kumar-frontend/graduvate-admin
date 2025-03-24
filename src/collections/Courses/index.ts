@@ -2,7 +2,6 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import { slugField } from '@/fields/slug'
 import {
@@ -12,9 +11,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { revalidateDelete } from '../Pages/hooks/revalidatePage'
-import { populateAuthors } from '../Posts/hooks/populateAuthors'
-import { revalidatePost } from '../Posts/hooks/revalidatePost'
 
 export const Courses: CollectionConfig<'courses'> = {
   slug: 'courses',
@@ -45,23 +41,6 @@ export const Courses: CollectionConfig<'courses'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'courses',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'courses',
-        req,
-      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -171,18 +150,7 @@ export const Courses: CollectionConfig<'courses'> = {
     // GraphQL will also not return mutated user data that differs from the underlying schema
     ...slugField(),
   ],
-  hooks: {
-    afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
-    afterDelete: [revalidateDelete],
-  },
   versions: {
-    drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
-      schedulePublish: true,
-    },
     maxPerDoc: 50,
   },
 }

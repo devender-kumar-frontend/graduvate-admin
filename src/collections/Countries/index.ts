@@ -14,7 +14,6 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import { slugField } from '@/fields/slug'
 import {
@@ -24,9 +23,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { revalidateDelete } from '../Pages/hooks/revalidatePage'
-import { populateAuthors } from '../Posts/hooks/populateAuthors'
-import { revalidatePost } from '../Posts/hooks/revalidatePost'
 
 export const Countries: CollectionConfig<'countries'> = {
   slug: 'countries',
@@ -50,23 +46,6 @@ export const Countries: CollectionConfig<'countries'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'countries',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'countries',
-        req,
-      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -344,18 +323,7 @@ export const Countries: CollectionConfig<'countries'> = {
     // GraphQL will also not return mutated user data that differs from the underlying schema
     ...slugField(),
   ],
-  hooks: {
-    afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
-    afterDelete: [revalidateDelete],
-  },
   versions: {
-    drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
-      schedulePublish: true,
-    },
     maxPerDoc: 50,
   },
 }
