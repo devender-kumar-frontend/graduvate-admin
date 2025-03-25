@@ -14,6 +14,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import { slugField } from '@/fields/slug'
 import {
@@ -23,6 +24,8 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { revalidateDelete } from '../Pages/hooks/revalidatePage'
+import { revalidatePost } from '../Posts/hooks/revalidatePost'
 
 export const Universities: CollectionConfig<'universities'> = {
   slug: 'universities',
@@ -53,6 +56,23 @@ export const Universities: CollectionConfig<'universities'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    livePreview: {
+      url: ({ data, req }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'universities',
+          req,
+        })
+
+        return path
+      },
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'universities',
+        req,
+      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -418,13 +438,33 @@ export const Universities: CollectionConfig<'universities'> = {
         },
         position: 'sidebar',
       },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
     ...slugField(),
   ],
+  hooks: {
+    afterChange: [revalidatePost],
+    afterDelete: [revalidateDelete],
+  },
   versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
     maxPerDoc: 50,
   },
 }

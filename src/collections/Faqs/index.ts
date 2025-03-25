@@ -3,6 +3,10 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 
+import { revalidateDelete } from '../Pages/hooks/revalidatePage'
+import { populateAuthors } from '../Posts/hooks/populateAuthors'
+import { revalidatePost } from '../Posts/hooks/revalidatePost'
+
 export const Faqs: CollectionConfig<'faqs'> = {
   slug: 'faqs',
   access: {
@@ -53,7 +57,18 @@ export const Faqs: CollectionConfig<'faqs'> = {
       },
     },
   ],
+  hooks: {
+    afterChange: [revalidatePost],
+    afterRead: [populateAuthors],
+    afterDelete: [revalidateDelete],
+  },
   versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
     maxPerDoc: 50,
   },
 }
