@@ -16,6 +16,7 @@ import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
+import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 
 import { slugField } from '@/fields/slug'
 import {
@@ -230,9 +231,17 @@ export const Posts: CollectionConfig<'posts'> = {
     ...slugField(),
   ],
   hooks: {
+    afterChange: [revalidatePost],
     afterRead: [populateAuthors],
+    afterDelete: [revalidateDelete],
   },
   versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
     maxPerDoc: 50,
   },
 }
