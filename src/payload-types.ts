@@ -835,11 +835,11 @@ export interface University {
         id?: string | null;
       }[]
     | null;
-  tutionFees?: number | null;
-  qsRank?: number | null;
-  costOfLiving?: number | null;
-  acceptance?: number | null;
-  employability?: number | null;
+  tutionFees?: string | null;
+  qsRank?: string | null;
+  costOfLiving?: string | null;
+  acceptance?: string | null;
+  employability?: string | null;
   location?: string | null;
   universityLogo?: (string | null) | Media;
   keyFeatureList?:
@@ -2182,10 +2182,6 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: string | Post;
-        } | null)
-      | ({
-          relationTo: 'universities';
-          value: string | University;
         } | null)
       | ({
           relationTo: 'countries';
