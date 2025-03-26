@@ -105,8 +105,16 @@ const Media: S3UploadCollectionConfig = {
         //  ACL: 'public-read',
       },
     },
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 200,
+        height: 200,
+        crop: 'center',
+      },
+    ],
     adminThumbnail: ({ doc }: any) => {
-      return `${process.env.S3_ENDPOINT}uploads/${doc.filename}`
+      return `${process.env.S3_ENDPOINT}uploads/${doc?.sizes?.thumbnail?.filename ? doc?.sizes?.thumbnail?.filename : doc?.filename}`
     },
   },
   // create a field to access uploaded files in s3 from payload api
@@ -122,7 +130,16 @@ const Media: S3UploadCollectionConfig = {
       },
       hooks: {
         afterRead: [
-          ({ data: doc }: any) => `${process.env.S3_ENDPOINT}uploads/${doc.type}/${doc.filename}`,
+          ({ data: doc }: any) => {
+            // add a url property on the main image
+            doc.url = `${process.env.S3_ENDPOINT}uploads/${doc.filename}`
+
+            // add a url property on each imageSize
+            Object.keys(doc.sizes).forEach(
+              (k) =>
+                (doc.sizes[k].url = `${process.env.S3_ENDPOINT}uploads/${doc.sizes[k].filename}`),
+            )
+          },
         ],
       },
     },
