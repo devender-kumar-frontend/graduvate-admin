@@ -14,7 +14,6 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import { slugField } from '@/fields/slug'
 import {
@@ -56,23 +55,6 @@ export const Universities: CollectionConfig<'universities'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'universities',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'universities',
-        req,
-      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -327,28 +309,28 @@ export const Universities: CollectionConfig<'universities'> = {
           fields: [
             {
               name: 'tutionFees',
-              label: 'Tuition Fees ($)',
-              type: 'number',
+              label: 'Tuition Fees',
+              type: 'text',
             },
             {
               name: 'qsRank',
-              label: 'QS Rank',
-              type: 'number',
+              label: 'Rank',
+              type: 'text',
             },
             {
               name: 'costOfLiving',
               label: 'Cost of Living',
-              type: 'number',
+              type: 'text',
             },
             {
               name: 'acceptance',
-              label: 'Acceptance %',
-              type: 'number',
+              label: 'Acceptance',
+              type: 'text',
             },
             {
               name: 'employability',
-              label: 'Employability %',
-              type: 'number',
+              label: 'Employability',
+              type: 'text',
             },
             {
               name: 'location',
@@ -463,7 +445,7 @@ export const Universities: CollectionConfig<'universities'> = {
       autosave: {
         interval: 100, // We set this interval for optimal live preview
       },
-      schedulePublish: true,
+      schedulePublish: false,
     },
     maxPerDoc: 50,
   },
