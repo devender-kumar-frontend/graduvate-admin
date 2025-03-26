@@ -47,6 +47,7 @@ export const Universities: CollectionConfig<'universities'> = {
     employability: true,
     location: true,
     courses: true,
+    image: true,
     universityLogo: true,
     meta: {
       image: true,
