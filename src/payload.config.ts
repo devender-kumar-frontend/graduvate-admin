@@ -10,7 +10,6 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Categories } from './collections/Categories'
 import { Countries } from './collections/Countries'
 import { Courses } from './collections/Courses'
-import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Universities } from './collections/Universities'
@@ -24,7 +23,10 @@ import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 
+import { S3Client } from '@aws-sdk/client-s3'
+import s3Upload from 'payload-s3-upload'
 import { Faqs } from './collections/Faqs'
+import Media from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -88,6 +90,15 @@ export default buildConfig({
   globals: [Header, Footer, CommonSettings],
   plugins: [
     ...plugins,
+    s3Upload(
+      new S3Client({
+        region: process.env.S3_BUCKET_REGION || '',
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+        },
+      }),
+    ),
     // storage-adapter-placeholder
   ],
   secret: process.env.PAYLOAD_SECRET,
