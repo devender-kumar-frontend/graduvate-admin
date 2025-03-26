@@ -95,8 +95,6 @@ const Media: S3UploadCollectionConfig = {
     update: authenticated,
   },
   upload: {
-    staticURL: 'uploads',
-    staticDir: 'uploads',
     disableLocalStorage: true,
     s3: {
       bucket: 'graduvate',
@@ -104,12 +102,12 @@ const Media: S3UploadCollectionConfig = {
       // prefix: ({ doc }) => `assets/${doc.type}`, // dynamic prefixes are possible too
       commandInput: {
         // optionally, use here any valid PutObjectCommandInput property
-        // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/putobjectcommandinput.html
-        ACL: 'public-read',
+        //  ACL: 'public-read',
       },
     },
-    adminThumbnail: ({ doc }: any) =>
-      `https://graduvate.s3.ap-south-1.amazonaws.com/uploads/${doc.filename}`,
+    adminThumbnail: ({ doc }: any) => {
+      return `${process.env.S3_ENDPOINT}uploads/${doc.filename}`
+    },
   },
   // create a field to access uploaded files in s3 from payload api
   fields: [
@@ -124,8 +122,7 @@ const Media: S3UploadCollectionConfig = {
       },
       hooks: {
         afterRead: [
-          ({ data: doc }: any) =>
-            `https://graduvate.s3.ap-south-1.amazonaws.com/uploads/${doc.type}/${doc.filename}`,
+          ({ data: doc }: any) => `${process.env.S3_ENDPOINT}uploads/${doc.type}/${doc.filename}`,
         ],
       },
     },
