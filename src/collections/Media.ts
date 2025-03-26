@@ -82,17 +82,25 @@
 
 //////////////////////////////////////////////
 
+import { anyone } from '@/access/anyone'
+import { authenticated } from '@/access/authenticated'
 import { S3UploadCollectionConfig } from 'payload-s3-upload'
 
 const Media: S3UploadCollectionConfig = {
   slug: 'media',
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: anyone,
+    update: authenticated,
+  },
   upload: {
-    staticURL: '/assets',
-    staticDir: 'assets',
+    staticURL: 'uploads',
+    staticDir: 'uploads',
     disableLocalStorage: true,
     s3: {
       bucket: 'graduvate',
-      prefix: 'images/xyz', // files will be stored in bucket folder images/xyz
+      prefix: 'uploads', // files will be stored in bucket folder images/xyz
       // prefix: ({ doc }) => `assets/${doc.type}`, // dynamic prefixes are possible too
       commandInput: {
         // optionally, use here any valid PutObjectCommandInput property
@@ -101,7 +109,7 @@ const Media: S3UploadCollectionConfig = {
       },
     },
     adminThumbnail: ({ doc }: any) =>
-      `https://graduvate.s3.ap-south-1.amazonaws.com/graduvate/${doc.filename}`,
+      `https://graduvate.s3.ap-south-1.amazonaws.com/uploads/${doc.filename}`,
   },
   // create a field to access uploaded files in s3 from payload api
   fields: [
@@ -117,7 +125,7 @@ const Media: S3UploadCollectionConfig = {
       hooks: {
         afterRead: [
           ({ data: doc }: any) =>
-            `https://graduvate.s3.ap-south-1.amazonaws.com/graduvate/${doc.type}/${doc.filename}`,
+            `https://graduvate.s3.ap-south-1.amazonaws.com/uploads/${doc.type}/${doc.filename}`,
         ],
       },
     },
