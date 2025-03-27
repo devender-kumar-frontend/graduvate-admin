@@ -143,6 +143,10 @@ const Media: S3UploadCollectionConfig = {
         ],
       },
     },
+    {
+      name: 'alt',
+      type: 'text',
+    },
   ],
 }
 
