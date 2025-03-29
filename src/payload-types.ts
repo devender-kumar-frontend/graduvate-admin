@@ -1467,7 +1467,9 @@ export interface UniversitiesSelect<T extends boolean = true> {
   youtubeVideoId?: T;
   countries?: T;
   similarUniversities?: T;
+  hostelFees?: T;
   rankingTitle?: T;
+  visaInsuranceFees?: T;
   rankingDescription?: T;
   internationalStudentIntakeTitle?: T;
   internationalStudentIntake?: T;

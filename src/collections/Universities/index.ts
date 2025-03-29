@@ -49,13 +49,15 @@ export const Universities: CollectionConfig<'universities'> = {
     courses: true,
     image: true,
     universityLogo: true,
+    hostelFees: true,
+    visaInsuranceFees: true,
     meta: {
       image: true,
       description: true,
     },
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ['title', 'slug', 'countries', 'updatedAt'],
     useAsTitle: 'title',
   },
   fields: [
@@ -206,9 +208,11 @@ export const Universities: CollectionConfig<'universities'> = {
                 },
                 {
                   name: 'qaRank',
+                  label: 'Country Rank',
                   type: 'text',
                 },
                 {
+                  label: 'World Rank',
                   name: 'usNewsRanks',
                   type: 'text',
                 },
@@ -311,6 +315,16 @@ export const Universities: CollectionConfig<'universities'> = {
             {
               name: 'tutionFees',
               label: 'Tuition Fees',
+              type: 'text',
+            },
+            {
+              name: 'hostelFees',
+              label: 'Hostel Fees',
+              type: 'text',
+            },
+            {
+              name: 'visaInsuranceFees',
+              label: 'Visa and Insurance Fees',
               type: 'text',
             },
             {
