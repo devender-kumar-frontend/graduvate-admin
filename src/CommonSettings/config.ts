@@ -10,6 +10,21 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
       type: 'tabs',
       tabs: [
         {
+          label: 'Header Section',
+          fields: [
+            {
+              name: 'headerCtaText',
+              label: 'CTA Text',
+              type: 'text',
+            },
+            {
+              name: 'headerCtaLink',
+              label: 'CTA Link',
+              type: 'text',
+            },
+          ],
+        },
+        {
           label: 'FAQ Section',
           fields: [
             {
