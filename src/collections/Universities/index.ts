@@ -451,6 +451,7 @@ export const Universities: CollectionConfig<'universities'> = {
     // GraphQL will also not return mutated user data that differs from the underlying schema
     ...slugField(),
   ],
+  
   hooks: {
     afterChange: [revalidatePost],
     afterDelete: [revalidateDelete],
@@ -464,4 +465,72 @@ export const Universities: CollectionConfig<'universities'> = {
     },
     maxPerDoc: 50,
   },
+  endpoints: [
+    {
+      path: '/search', // The endpoint path (e.g., /api/universities/custom-endpoint)
+      method: 'get', // HTTP method (GET, POST, etc.)
+      handler: async (req) => {
+        try {
+          const searchTerm = req.query.title;
+          if (!searchTerm) {
+            return Response.json({ error: 'Search term is required' }, { status: 404 });
+          }
+          
+          // Create a case-insensitive regular expression from the search term
+          const searchRegex = new RegExp(searchTerm, 'i');
+          
+          const universities = await req.payload.find({
+            collection: 'universities',
+            select:{
+              title: true,
+              slug: true,
+            },
+            where: {
+              or: [
+                {
+                  title: {
+                    like: searchRegex, // MongoDB regular expression for search
+                  },
+                },
+                {
+                  shortDescription: {
+                    like: searchRegex, // MongoDB regular expression for search
+                  },
+                },
+                
+              ],
+            },
+          });
+          
+          return Response.json({ message: 'Data fetched successfully', universities }, { status: 200 });
+          
+        } catch (error) {
+          return Response.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+        }
+      },
+    },
+    {
+      path: '/slugs', // The endpoint path (e.g., /api/universities/custom-endpoint)
+      method: 'get', // HTTP method (GET, POST, etc.)
+      handler: async (req) => {
+        try {
+          
+          const allSlugs = await req.payload.find({
+            collection: 'universities',
+            select:{
+              slug: true,
+            },
+           
+          });
+          
+          return Response.json({ message: 'Data fetched successfully', allSlugs }, { status: 200 });
+          
+        } catch (error) {
+          return Response.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+        }
+      },
+    },
+  ]
+  
 }
+ 
