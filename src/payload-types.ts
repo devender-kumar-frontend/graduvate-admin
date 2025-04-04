@@ -70,6 +70,7 @@ export interface Config {
     posts: Post;
     universities: University;
     countries: Country;
+    centers: any;
     media: Media;
     categories: Category;
     courses: Course;

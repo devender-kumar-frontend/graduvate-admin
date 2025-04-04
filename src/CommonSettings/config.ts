@@ -22,6 +22,21 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
               label: 'CTA Link',
               type: 'text',
             },
+            {
+              name: 'ctaRedirectExternal',
+              label: 'External Link',
+              type: 'checkbox',
+            },
+          ],
+        },
+        {
+          label: 'University Section',
+          fields: [
+            {
+              name: 'courseCtaPhoneumber',
+              label: 'Whats App Number for Course CTA',
+              type: 'text',
+            },
           ],
         },
         {
