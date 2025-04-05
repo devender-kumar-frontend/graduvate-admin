@@ -26,7 +26,6 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { revalidateDelete } from '../Pages/hooks/revalidatePage'
 import { revalidatePost } from '../Posts/hooks/revalidatePost'
-import { create } from 'domain'
 
 export const Universities: CollectionConfig<'universities'> = {
   slug: 'universities',
@@ -524,6 +523,11 @@ export const Universities: CollectionConfig<'universities'> = {
             collection: 'universities',
             select: {
               slug: true,
+            },
+            where: {
+              _status: {
+                equals: 'published', // Exclude drafts
+              },
             },
           })
 
