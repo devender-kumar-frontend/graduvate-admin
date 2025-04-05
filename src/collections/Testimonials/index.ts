@@ -1,12 +1,27 @@
+import { authenticated } from '@/access/authenticated'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { CollectionConfig } from 'payload'
 
-export const Testimonials: CollectionConfig = {
+export const Testimonials: CollectionConfig<'testimonials'> = {
   slug: 'testimonials', // Unique identifier for the collection
+  defaultPopulate: {
+    name: true,
+    designation: true,
+    description: true,
+    image: true,
+  },
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: authenticatedOrPublished,
+    update: authenticated,
+  },
   labels: {
     singular: 'Testimonial',
     plural: 'Testimonials',
   },
   admin: {
+    defaultColumns: ['name', 'designation', 'updatedAt'],
     useAsTitle: 'name',
   },
   fields: [
@@ -29,11 +44,14 @@ export const Testimonials: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
-    {
-      name: 'events',
-      type: 'relationship',
-
-      relationTo: 'events',
-    },
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
+    maxPerDoc: 50,
+  },
 }
