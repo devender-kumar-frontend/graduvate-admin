@@ -1,28 +1,42 @@
+import { authenticated } from '@/access/authenticated'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { CollectionConfig } from 'payload'
 
-export const Events: CollectionConfig = {
+export const Events: CollectionConfig<'events'> = {
   slug: 'events', // Unique identifier for the collection
+  defaultPopulate: {
+    eventTitle: true,
+    eventDate: true,
+    eventTime: true,
+    image: true,
+  },
+  access: {
+    create: authenticated,
+    delete: authenticated,
+    read: authenticatedOrPublished,
+    update: authenticated,
+  },
   labels: {
     singular: 'Event',
     plural: 'Events',
   },
   admin: {
-    useAsTitle: 'name',
+    defaultColumns: ['eventTitle', 'eventDate', 'eventTime', 'updatedAt'],
+    useAsTitle: 'eventTitle',
   },
   fields: [
     {
-      name: 'name',
+      name: 'eventTitle',
       type: 'text',
       required: true,
     },
     {
-      name: 'designation',
+      name: 'eventDate',
       type: 'text',
-      required: true,
     },
     {
-      name: 'description',
-      type: 'textarea',
+      name: 'eventTime',
+      type: 'text',
     },
     {
       name: 'image',
@@ -30,4 +44,13 @@ export const Events: CollectionConfig = {
       relationTo: 'media',
     },
   ],
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
+    maxPerDoc: 50,
+  },
 }

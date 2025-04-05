@@ -30,6 +30,19 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
           ],
         },
         {
+          label: 'Testimonials Section',
+          fields: [
+            {
+              name: 'testimonialTitle',
+              type: 'text',
+            },
+            {
+              name: 'testimonialDescription',
+              type: 'textarea',
+            },
+          ],
+        },
+        {
           label: 'University Section',
           fields: [
             {

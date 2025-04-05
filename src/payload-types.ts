@@ -1742,9 +1742,9 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
-  name?: T;
-  designation?: T;
-  description?: T;
+  eventTitle?: T;
+  eventDate?: T;
+  eventTime?: T;
   image?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1758,7 +1758,6 @@ export interface TestimonialsSelect<T extends boolean = true> {
   designation?: T;
   description?: T;
   image?: T;
-  events?: T;
   updatedAt?: T;
   createdAt?: T;
 }
