@@ -42,7 +42,7 @@ export const Enquiries: CollectionConfig = {
     {
       path: '/finanace-enquiry',
       method: 'post',
-      handler: async (req) => {
+      handler: async (req:any) => {
         try {
           const data = await req.json();
           const newSubmission = await req.payload.create({
