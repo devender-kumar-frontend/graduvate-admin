@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CollectionConfig } from 'payload'
 
 import {
@@ -364,35 +365,46 @@ export const Countries: CollectionConfig<'countries'> = {
       method: 'get', // HTTP method (GET, POST, etc.)
       handler: async (req) => {
         try {
-          const page = parseInt(req.query?.page as string) || 1;
-          const limit = parseInt(req.query?.limit as string) || 10;
+          const page = parseInt(req.query?.page as string) || 1
+          const limit = parseInt(req.query?.limit as string) || 10
           const result = await req.payload.find({
             collection: 'countries',
-            select:{
-              title:true,
+            select: {
+              title: true,
               slug: true,
               flagImage: true,
+              banner: true,
+            },
+            where: {
+              _status: {
+                equals: 'published', // Exclude drafts
+              },
             },
             page,
             limit,
-          });
+          })
           // Manually reduce to just the filename
-        const allSlugs = result.docs.map((countryImg:any) => ({
-          title: countryImg.title,
-          slug: countryImg.slug,
-          flagImage: {
-            url: countryImg.flagImage?.url || null,
-            thumbnailURL: countryImg.flagImage?.thumbnailURL || null,
-          },
-        }));
+          const allSlugs = result.docs.map((countryImg: any) => ({
+            title: countryImg.title,
+            slug: countryImg.slug,
+            flagImage: {
+              url: countryImg.flagImage?.url || null,
+              thumbnailURL: countryImg.flagImage?.thumbnailURL || null,
+            },
+            banner: {
+              url: countryImg.banner?.url || null,
+              thumbnailURL: countryImg.banner?.thumbnailURL || null,
+            },
+          }))
 
-
-          return Response.json({ message: 'Data fetched successfully', allSlugs }, { status: 200 });
-
-        } catch (error:any) {
-          return Response.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+          return Response.json({ message: 'Data fetched successfully', allSlugs }, { status: 200 })
+        } catch (error: any) {
+          return Response.json(
+            { message: 'Internal Server Error', error: error.message },
+            { status: 500 },
+          )
         }
       },
     },
-  ]
+  ],
 }
