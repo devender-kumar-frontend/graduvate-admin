@@ -358,4 +358,28 @@ export const Countries: CollectionConfig<'countries'> = {
     },
     maxPerDoc: 50,
   },
+  endpoints: [
+    {
+      path: '/slugs', // The endpoint path (e.g., /api/universities/custom-endpoint)
+      method: 'get', // HTTP method (GET, POST, etc.)
+      handler: async (req) => {
+        try {
+
+          const allSlugs = await req.payload.find({
+            collection: 'countries',
+            select:{
+              title:true,
+              slug: true,
+              flagImage: true,
+            },
+          });
+
+          return Response.json({ message: 'Data fetched successfully', allSlugs }, { status: 200 });
+
+        } catch (error:any) {
+          return Response.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+        }
+      },
+    },
+  ]
 }
