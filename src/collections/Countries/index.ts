@@ -377,7 +377,7 @@ export const Countries: CollectionConfig<'countries'> = {
             limit,
           });
           // Manually reduce to just the filename
-        const allSlugs = result.docs.map((countryImg) => ({
+        const allSlugs = result.docs.map((countryImg:any) => ({
           title: countryImg.title,
           slug: countryImg.slug,
           flagImage: {
