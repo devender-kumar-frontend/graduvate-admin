@@ -71,6 +71,7 @@ export interface Config {
     universities: University;
     countries: Country;
     centers: any;
+    blogs: any;
     media: Media;
     categories: Category;
     courses: Course;
@@ -1432,6 +1433,7 @@ export interface PostsSelect<T extends boolean = true> {
   blogImage?: T;
   content?: T;
   relatedPosts?: T;
+  isFeaturedBlog?: T;
   categories?: T;
   meta?:
     | T
@@ -1565,6 +1567,7 @@ export interface CountriesSelect<T extends boolean = true> {
       };
   relatedPosts?: T;
   flagImage?: T;
+  id?:T;
   menuName?: T;
   meta?:
     | T

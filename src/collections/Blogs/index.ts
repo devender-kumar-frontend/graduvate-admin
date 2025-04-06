@@ -1,23 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
-import { authenticated } from '../../access/authenticated'
-import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import { populateAuthors } from './hooks/populateAuthors'
-import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-
+import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { slugField } from '@/fields/slug'
 import {
   MetaDescriptionField,
@@ -26,9 +10,21 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
+import { authenticated } from '../../access/authenticated'
+import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
+import { Banner } from '../../blocks/Banner/config'
+import { Code } from '../../blocks/Code/config'
 
-export const Posts: CollectionConfig<'posts'> = {
-  slug: 'posts',
+export const Blogs: CollectionConfig<'blogs'> = {
+  slug: 'blogs',
   access: {
     create: authenticated,
     delete: authenticated,
@@ -53,24 +49,7 @@ export const Posts: CollectionConfig<'posts'> = {
     },
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'posts',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'posts',
-        req,
-      }),
+    defaultColumns: ['title', 'address', 'updatedAt'],
     useAsTitle: 'title',
   },
   fields: [
@@ -122,6 +101,16 @@ export const Posts: CollectionConfig<'posts'> = {
                 },
               }),
               required: false,
+            },
+            {
+              name: 'relatedPosts',
+              type: 'relationship',
+              relationTo: 'blogs',
+              hasMany: true,
+              admin: {
+                hidden: true,
+                readOnly: true,
+              },
             },
           ],
           label: 'Content',
@@ -191,11 +180,6 @@ export const Posts: CollectionConfig<'posts'> = {
     },
     ...slugField(),
   ],
-  hooks: {
-    afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
-    afterDelete: [revalidateDelete],
-  },
   versions: {
     drafts: {
       autosave: {
@@ -204,5 +188,29 @@ export const Posts: CollectionConfig<'posts'> = {
       schedulePublish: true,
     },
     maxPerDoc: 50,
+  },
+
+  hooks: {
+    beforeChange: [
+      async ({ data, originalDoc, req }: any) => {
+        if (!data.relatedPosts) {
+          const relatedPosts = await req.payload.find({
+            collection: 'blogs',
+            where: {
+              id: { not_equals: originalDoc?.id }, // Exclude the current post
+            },
+            select: {
+              title: true,
+              slug: true,
+              blogImage: true,
+            },
+            limit: 3, // Fetch 3 related posts (or any number you want)
+          })
+
+          data.relatedPosts = relatedPosts.docs.map((post: any) => post.id) // Assign the IDs of related posts
+        }
+        return data
+      },
+    ],
   },
 }
