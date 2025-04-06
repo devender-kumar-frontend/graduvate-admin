@@ -22,6 +22,7 @@ import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
+import {Enquiries} from './collections/enquiries'
 
 import { S3Client } from '@aws-sdk/client-s3'
 import s3Upload from 'payload-s3-upload'
@@ -89,6 +90,7 @@ export default buildConfig({
     Events,
     Testimonials,
     Faqs,
+    Enquiries
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, CommonSettings],
