@@ -374,6 +374,7 @@ export const Countries: CollectionConfig<'countries'> = {
               slug: true,
               flagImage: true,
               banner: true,
+              id: true,
             },
             where: {
               _status: {
@@ -385,6 +386,7 @@ export const Countries: CollectionConfig<'countries'> = {
           })
           // Manually reduce to just the filename
           const allSlugs = result.docs.map((countryImg: any) => ({
+            id: countryImg.id,
             title: countryImg.title,
             slug: countryImg.slug,
             flagImage: {

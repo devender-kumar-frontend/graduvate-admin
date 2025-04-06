@@ -25,6 +25,7 @@ import { getServerSideURL } from './utilities/getURL'
 
 import { S3Client } from '@aws-sdk/client-s3'
 import s3Upload from 'payload-s3-upload'
+import { Blogs } from './collections/Blogs'
 import { Centers } from './collections/Centers'
 import { Faqs } from './collections/Faqs'
 import Media from './collections/Media'
@@ -82,6 +83,7 @@ export default buildConfig({
     Countries,
     Media,
     Categories,
+    Blogs,
     Courses,
     Users,
     Events,

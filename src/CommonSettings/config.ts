@@ -10,7 +10,7 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Header Section',
+          label: 'Header',
           fields: [
             {
               name: 'headerCtaText',
@@ -26,6 +26,90 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
               name: 'ctaRedirectExternal',
               label: 'External Link',
               type: 'checkbox',
+            },
+          ],
+        },
+        {
+          label: 'Footer',
+          fields: [
+            {
+              type: 'tabs',
+              tabs: [
+                {
+                  label: 'CTA',
+                  fields: [
+                    {
+                      name: 'footerCtaTitle',
+                      label: 'CTA Title',
+                      type: 'text',
+                    },
+                    {
+                      name: 'footerCtaDescription',
+                      label: 'CTA Description',
+                      type: 'textarea',
+                    },
+                    {
+                      name: 'footerCtaButtonText',
+                      label: 'CTA Button Text',
+                      type: 'text',
+                    },
+                    {
+                      name: 'footerCtaButtonUrl',
+                      label: 'CTA Button Url',
+                      type: 'text',
+                    },
+                  ],
+                },
+                {
+                  label: 'About Us',
+                  fields: [
+                    {
+                      name: 'footerAboutUs',
+                      type: 'textarea',
+                    },
+                  ],
+                },
+                {
+                  label: 'Footer University',
+                  fields: [
+                    {
+                      name: 'universities',
+                      type: 'relationship',
+                      admin: {
+                        position: 'sidebar',
+                      },
+                      hasMany: true,
+                      relationTo: 'universities',
+                    },
+                  ],
+                },
+
+                {
+                  label: 'Social Links',
+                  fields: [
+                    {
+                      name: 'graduvateFacebook',
+                      label: 'Facebook',
+                      type: 'text',
+                    },
+                    {
+                      name: 'graduvateTwitter',
+                      label: 'Twitter',
+                      type: 'text',
+                    },
+                    {
+                      name: 'graduvateYoutube',
+                      label: 'Youtube',
+                      type: 'text',
+                    },
+                    {
+                      name: 'graduvateInstagram',
+                      label: 'Instagram',
+                      type: 'text',
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
