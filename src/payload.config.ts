@@ -15,6 +15,7 @@ import { Posts } from './collections/Posts'
 import { Universities } from './collections/Universities'
 import { Users } from './collections/Users'
 
+import { Enquiries } from './collections/enquiries'
 import { Events } from './collections/Events'
 import { Testimonials } from './collections/Testimonials'
 import { CommonSettings } from './CommonSettings/config'
@@ -22,7 +23,6 @@ import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
-import {Enquiries} from './collections/enquiries'
 
 import { S3Client } from '@aws-sdk/client-s3'
 import s3Upload from 'payload-s3-upload'
@@ -90,7 +90,7 @@ export default buildConfig({
     Events,
     Testimonials,
     Faqs,
-    Enquiries
+    Enquiries,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, CommonSettings],

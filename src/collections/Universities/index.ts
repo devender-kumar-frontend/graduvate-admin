@@ -44,6 +44,7 @@ export const Universities: CollectionConfig<'universities'> = {
     tutionFees: true,
     qsRank: true,
     costOfLiving: true,
+    establishText: true,
     acceptance: true,
     employability: true,
     location: true,
@@ -52,6 +53,7 @@ export const Universities: CollectionConfig<'universities'> = {
     universityLogo: true,
     hostelFees: true,
     visaInsuranceFees: true,
+    shortDescription: true,
     meta: {
       image: true,
       description: true,
@@ -131,6 +133,8 @@ export const Universities: CollectionConfig<'universities'> = {
               type: 'relationship',
               admin: {
                 position: 'sidebar',
+                hidden: true,
+                readOnly: true,
               },
               hasMany: true,
               relationTo: 'universities',
@@ -148,7 +152,10 @@ export const Universities: CollectionConfig<'universities'> = {
                           in: currentUniversity?.countries || [],
                         },
                       },
-                      limit: 3,
+                      select: {
+                        shortDescription: true,
+                      },
+                      limit: 100,
                     })
                     return similarUniversities.docs.map((universities) => universities.id)
                   },
