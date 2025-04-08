@@ -36,8 +36,10 @@ export const Courses: CollectionConfig<'courses'> = {
     duration: true,
     qualification: true,
     courseLevel: true,
-    qualification2: true,
     intakes: true,
+    tutionFees: true,
+    visaInsuranceFees: true,
+    hostelFees: true,
     meta: {
       image: true,
       description: true,
@@ -105,13 +107,28 @@ export const Courses: CollectionConfig<'courses'> = {
               name: 'courseLevel',
               type: 'text',
             },
+            // {
+            //   name: 'qualification2',
+            //   label: 'Qualification',
+            //   type: 'text',
+            // },
             {
-              name: 'qualification2',
-              label: 'Qualification',
+              name: 'intakes',
               type: 'text',
             },
             {
-              name: 'intakes',
+              name: 'tutionFees',
+              label: 'Tuition Fees',
+              type: 'text',
+            },
+            {
+              name: 'hostelFees',
+              label: 'Hostel Fees',
+              type: 'text',
+            },
+            {
+              name: 'visaInsuranceFees',
+              label: 'Visa and Insurance Fees',
               type: 'text',
             },
           ],

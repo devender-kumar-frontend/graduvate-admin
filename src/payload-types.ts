@@ -953,7 +953,7 @@ export interface Course {
   duration?: string | null;
   qualification?: string | null;
   courseLevel?: string | null;
-  qualification2?: string | null;
+  tutionFees?: string | null;
   intakes?: string | null;
   meta?: {
     title?: string | null;
@@ -1707,8 +1707,10 @@ export interface CoursesSelect<T extends boolean = true> {
   fees?: T;
   duration?: T;
   qualification?: T;
+  tutionFees?:T;
   courseLevel?: T;
-  qualification2?: T;
+  visaInsuranceFees?:T;
+  hostelFees?:T;
   intakes?: T;
   meta?:
     | T

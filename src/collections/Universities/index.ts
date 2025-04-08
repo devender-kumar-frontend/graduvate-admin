@@ -44,6 +44,7 @@ export const Universities: CollectionConfig<'universities'> = {
     tutionFees: true,
     qsRank: true,
     costOfLiving: true,
+    establishText: true,
     acceptance: true,
     employability: true,
     location: true,
@@ -52,6 +53,7 @@ export const Universities: CollectionConfig<'universities'> = {
     universityLogo: true,
     hostelFees: true,
     visaInsuranceFees: true,
+    shortDescription: true,
     meta: {
       image: true,
       description: true,
@@ -131,6 +133,8 @@ export const Universities: CollectionConfig<'universities'> = {
               type: 'relationship',
               admin: {
                 position: 'sidebar',
+                hidden: true,
+                readOnly: true,
               },
               hasMany: true,
               relationTo: 'universities',
@@ -148,7 +152,10 @@ export const Universities: CollectionConfig<'universities'> = {
                           in: currentUniversity?.countries || [],
                         },
                       },
-                      limit: 3,
+                      select: {
+                        shortDescription: true,
+                      },
+                      limit: 100,
                     })
                     return similarUniversities.docs.map((universities) => universities.id)
                   },
@@ -532,6 +539,70 @@ export const Universities: CollectionConfig<'universities'> = {
           })
 
           return Response.json({ message: 'Data fetched successfully', allSlugs }, { status: 200 })
+        } catch (error: any) {
+          return Response.json(
+            { message: 'Internal Server Error', error: error.message },
+            { status: 500 },
+          )
+        }
+      },
+    },
+    {
+      path: '/single-university/:slug',
+      method: 'get',
+      handler: async (req:any) => {
+        try {
+          const urlParts = req.url.split('/');
+          const slug = urlParts[urlParts.length - 1];
+          const fetchUniversity = await req.payload.find({
+            collection: 'universities',
+            where: {
+              slug: {
+                equals:slug
+              },
+              _status: {
+                equals: 'published', // Exclude drafts
+              },
+            },
+          })
+          const university = fetchUniversity.docs[0];
+
+      if (!university) {
+        return Response.json({ message: 'University not found' }, { status: 404 });
+      }
+
+      const countryId = university.countries[0].id
+      const sameCountryUniversities = await req.payload.find({
+        collection: 'universities',
+        select: {
+          title: true,
+          slug: true,
+          flagImage: true,
+          banner: true,
+          id: true,
+        },
+        where: {
+          and: [
+            {
+              country: {
+                $in: countryId,
+              },
+            },
+            {
+              slug: {
+                not_equals: slug, // Exclude current university
+              },
+            },
+            {
+              _status: {
+                equals: 'published',
+              },
+            },
+          ],
+        },
+        limit: 10, // optional: limit number of results
+      });
+          return Response.json({ message: 'Data fetched successfully', fetchUniversity,relatedUniversities: sameCountryUniversities.docs }, { status: 200 })
         } catch (error: any) {
           return Response.json(
             { message: 'Internal Server Error', error: error.message },
