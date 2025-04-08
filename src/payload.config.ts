@@ -17,6 +17,7 @@ import { Users } from './collections/Users'
 
 import { Enquiries } from './collections/enquiries'
 import { Events } from './collections/Events'
+import { journeyEnquiries } from './collections/journeyEnquiries'
 import { Testimonials } from './collections/Testimonials'
 import { CommonSettings } from './CommonSettings/config'
 import { Footer } from './Footer/config'
@@ -91,6 +92,7 @@ export default buildConfig({
     Testimonials,
     Faqs,
     Enquiries,
+    journeyEnquiries,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, CommonSettings],
