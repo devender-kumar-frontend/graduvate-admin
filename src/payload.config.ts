@@ -31,6 +31,10 @@ import { Blogs } from './collections/Blogs'
 import { Centers } from './collections/Centers'
 import { Faqs } from './collections/Faqs'
 import Media from './collections/Media'
+import { AboutUs } from './WebsitePages/AbousUs/config'
+import { CentersData } from './WebsitePages/CentersData/config'
+import { ContactUs } from './WebsitePages/ContactUs/config'
+import { Homepage } from './WebsitePages/Homepage/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -95,7 +99,7 @@ export default buildConfig({
     journeyEnquiries,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, CommonSettings],
+  globals: [Header, Footer, CommonSettings, Homepage, AboutUs, CentersData, ContactUs],
   plugins: [
     ...plugins,
     s3Upload(
