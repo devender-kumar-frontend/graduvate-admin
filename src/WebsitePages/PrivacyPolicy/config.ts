@@ -19,7 +19,7 @@ import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 
 export const PrivacyPolicy: Omit<GlobalConfig, 'navItems'> = {
-  slug: 'privacy-policy',
+  slug: 'privacy-policy-page',
   access: {
     read: () => true,
   },
