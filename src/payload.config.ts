@@ -29,6 +29,8 @@ import { Blogs } from './collections/Blogs'
 import { Centers } from './collections/Centers'
 import { Faqs } from './collections/Faqs'
 import Media from './collections/Media'
+import { Footer } from './Footer/config'
+import { Header } from './Header/config'
 import { AboutUs } from './WebsitePages/AbousUs/config'
 import { BlogPage } from './WebsitePages/BlogPage/config'
 import { CentersData } from './WebsitePages/CentersData/config'
@@ -113,6 +115,8 @@ export default buildConfig({
     Homepage,
     Kickstart,
     PrivacyPolicy,
+    Header,
+    Footer,
   ],
   plugins: [
     ...plugins,
