@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
@@ -40,6 +41,7 @@ export const Courses: CollectionConfig<'courses'> = {
     tutionFees: true,
     visaInsuranceFees: true,
     hostelFees: true,
+    courseUniversity: true,
     meta: {
       image: true,
       description: true,
@@ -85,6 +87,13 @@ export const Courses: CollectionConfig<'courses'> = {
             {
               name: 'content',
               type: 'textarea',
+            },
+            {
+              name: 'courseUniversity',
+              label: 'Select University',
+              type: 'relationship',
+              relationTo: 'universities',
+              hasMany: true,
             },
           ],
           label: 'Content',
@@ -202,4 +211,68 @@ export const Courses: CollectionConfig<'courses'> = {
     },
     maxPerDoc: 50,
   },
+  endpoints: [
+    {
+      path: '/university-courses', // The endpoint path (e.g., /api/universities/custom-endpoint)
+      method: 'get', // HTTP method (GET, POST, etc.)
+      handler: async (req) => {
+        try {
+          const page = parseInt(req.query?.page as string) || 1
+          const limit = parseInt(req.query?.limit as string) || 10
+          const result = await req.payload.find({
+            collection: 'courses',
+            select: {
+              title: true,
+              slug: true,
+              courseImage: true,
+              content: true,
+              fees: true,
+              duration: true,
+              qualification: true,
+              courseLevel: true,
+              intakes: true,
+              tutionFees: true,
+              visaInsuranceFees: true,
+              hostelFees: true,
+            },
+            where: {
+              _status: {
+                equals: 'published', // Exclude drafts
+              },
+              courseUniversity: {
+                contains: req.query.universityId, // Filters by university ID
+              },
+            },
+            page,
+            limit,
+          })
+          // Manually reduce to just the filename
+          const docs = result.docs.map((countryImg: any) => ({
+            id: countryImg.id,
+            title: countryImg.title,
+            slug: countryImg.slug,
+            courseImage: {
+              url: countryImg.courseImage?.url || null,
+            },
+            content: countryImg.content,
+            fees: countryImg.fees,
+            duration: countryImg.duration,
+            tutionFees: countryImg.tutionFees,
+            qualification: countryImg.qualification,
+            courseLevel: countryImg.courseLevel,
+            intakes: countryImg.intakes,
+            visaInsuranceFees: countryImg.visaInsuranceFees,
+            hostelFees: countryImg.hostelFees,
+          }))
+
+          return Response.json({ message: 'Data fetched successfully', docs }, { status: 200 })
+        } catch (error: any) {
+          return Response.json(
+            { message: 'Internal Server Error', error: error.message },
+            { status: 500 },
+          )
+        }
+      },
+    },
+  ],
 }

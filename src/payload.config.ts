@@ -20,8 +20,6 @@ import { Events } from './collections/Events'
 import { journeyEnquiries } from './collections/journeyEnquiries'
 import { Testimonials } from './collections/Testimonials'
 import { CommonSettings } from './CommonSettings/config'
-import { Footer } from './Footer/config'
-import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 
@@ -31,6 +29,15 @@ import { Blogs } from './collections/Blogs'
 import { Centers } from './collections/Centers'
 import { Faqs } from './collections/Faqs'
 import Media from './collections/Media'
+import { AboutUs } from './WebsitePages/AbousUs/config'
+import { BlogPage } from './WebsitePages/BlogPage/config'
+import { CentersData } from './WebsitePages/CentersData/config'
+import { ContactUs } from './WebsitePages/ContactUs/config'
+import { EventPage } from './WebsitePages/EventPage/config'
+import { Finance } from './WebsitePages/Finance/config'
+import { Homepage } from './WebsitePages/Homepage/config'
+import { Kickstart } from './WebsitePages/Kickstart/config'
+import { PrivacyPolicy } from './WebsitePages/PrivacyPolicy/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -95,7 +102,18 @@ export default buildConfig({
     journeyEnquiries,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, CommonSettings],
+  globals: [
+    AboutUs,
+    BlogPage,
+    CentersData,
+    CommonSettings,
+    ContactUs,
+    EventPage,
+    Finance,
+    Homepage,
+    Kickstart,
+    PrivacyPolicy,
+  ],
   plugins: [
     ...plugins,
     s3Upload(

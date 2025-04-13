@@ -1473,6 +1473,7 @@ export interface UniversitiesSelect<T extends boolean = true> {
   hostelFees?: T;
   rankingTitle?: T;
   visaInsuranceFees?: T;
+  courseUniversity?:T;
   rankingDescription?: T;
   internationalStudentIntakeTitle?: T;
   internationalStudentIntake?: T;
@@ -1710,6 +1711,7 @@ export interface CoursesSelect<T extends boolean = true> {
   tutionFees?:T;
   courseLevel?: T;
   visaInsuranceFees?:T;
+  courseUniversity?:T;
   hostelFees?:T;
   intakes?: T;
   meta?:

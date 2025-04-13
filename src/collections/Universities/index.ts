@@ -253,15 +253,15 @@ export const Universities: CollectionConfig<'universities'> = {
                 },
               }),
             },
-            {
-              name: 'courses',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'courses',
-            },
+            // {
+            //   name: 'courses',
+            //   type: 'relationship',
+            //   admin: {
+            //     position: 'sidebar',
+            //   },
+            //   hasMany: true,
+            //   relationTo: 'courses',
+            // },
           ],
         },
         {
@@ -550,59 +550,66 @@ export const Universities: CollectionConfig<'universities'> = {
     {
       path: '/single-university/:slug',
       method: 'get',
-      handler: async (req:any) => {
+      handler: async (req: any) => {
         try {
-          const urlParts = req.url.split('/');
-          const slug = urlParts[urlParts.length - 1];
+          const urlParts = req.url.split('/')
+          const slug = urlParts[urlParts.length - 1]
           const fetchUniversity = await req.payload.find({
             collection: 'universities',
             where: {
               slug: {
-                equals:slug
+                equals: slug,
               },
               _status: {
                 equals: 'published', // Exclude drafts
               },
             },
           })
-          const university = fetchUniversity.docs[0];
+          const university = fetchUniversity.docs[0]
 
-      if (!university) {
-        return Response.json({ message: 'University not found' }, { status: 404 });
-      }
+          if (!university) {
+            return Response.json({ message: 'University not found' }, { status: 404 })
+          }
 
-      const countryId = university.countries[0].id
-      const sameCountryUniversities = await req.payload.find({
-        collection: 'universities',
-        select: {
-          title: true,
-          slug: true,
-          flagImage: true,
-          banner: true,
-          id: true,
-        },
-        where: {
-          and: [
-            {
-              country: {
-                $in: countryId,
-              },
+          const countryId = university.countries[0].id
+          const sameCountryUniversities = await req.payload.find({
+            collection: 'universities',
+            select: {
+              title: true,
+              slug: true,
+              flagImage: true,
+              banner: true,
+              id: true,
             },
-            {
-              slug: {
-                not_equals: slug, // Exclude current university
-              },
+            where: {
+              and: [
+                {
+                  country: {
+                    $in: countryId,
+                  },
+                },
+                {
+                  slug: {
+                    not_equals: slug, // Exclude current university
+                  },
+                },
+                {
+                  _status: {
+                    equals: 'published',
+                  },
+                },
+              ],
             },
+            limit: 10, // optional: limit number of results
+          })
+          return Response.json(
             {
-              _status: {
-                equals: 'published',
-              },
+              message: 'Data fetched successfully',
+              fetchUniversity,
+              relatedUniversities: sameCountryUniversities.docs,
             },
-          ],
-        },
-        limit: 10, // optional: limit number of results
-      });
-          return Response.json({ message: 'Data fetched successfully', fetchUniversity,relatedUniversities: sameCountryUniversities.docs }, { status: 200 })
+            { status: 200 },
+          )
         } catch (error: any) {
           return Response.json(
             { message: 'Internal Server Error', error: error.message },
