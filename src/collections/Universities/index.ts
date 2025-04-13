@@ -253,15 +253,15 @@ export const Universities: CollectionConfig<'universities'> = {
                 },
               }),
             },
-            {
-              name: 'courses',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'courses',
-            },
+            // {
+            //   name: 'courses',
+            //   type: 'relationship',
+            //   admin: {
+            //     position: 'sidebar',
+            //   },
+            //   hasMany: true,
+            //   relationTo: 'courses',
+            // },
           ],
         },
         {
