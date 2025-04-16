@@ -97,12 +97,12 @@ const Media: S3UploadCollectionConfig = {
   upload: {
     disableLocalStorage: true,
     s3: {
-      bucket: 'graduvate',
+      bucket: process.env.S3_BUCKET_NAME,
       prefix: 'uploads', // files will be stored in bucket folder images/xyz
       // prefix: ({ doc }) => `assets/${doc.type}`, // dynamic prefixes are possible too
       commandInput: {
         // optionally, use here any valid PutObjectCommandInput property
-        //  ACL: 'public-read',
+        //  ACL: 'public-read', // This needs to be comment
       },
     },
     imageSizes: [
@@ -131,14 +131,17 @@ const Media: S3UploadCollectionConfig = {
       hooks: {
         afterRead: [
           ({ data: doc }: any) => {
+            if (!doc?.filename) return
             // add a url property on the main image
             doc.url = `${process.env.S3_ENDPOINT}uploads/${doc.filename}`
 
             // add a url property on each imageSize
-            Object.keys(doc.sizes).forEach(
-              (k) =>
-                (doc.sizes[k].url = `${process.env.S3_ENDPOINT}uploads/${doc.sizes[k].filename}`),
-            )
+            if (doc?.sizes) {
+              Object.keys(doc.sizes).forEach(
+                (k) =>
+                  (doc.sizes[k].url = `${process.env.S3_ENDPOINT}uploads/${doc.sizes[k].filename}`),
+              )
+            }
           },
         ],
       },

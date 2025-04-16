@@ -20,6 +20,7 @@ export const Centers: CollectionConfig<'centers'> = {
     phone: true,
     mapAddress: true,
     image: true,
+    mapIframe: true,
   },
   admin: {
     defaultColumns: ['addressTitle', 'address', 'updatedAt'],
@@ -41,6 +42,10 @@ export const Centers: CollectionConfig<'centers'> = {
     },
     {
       name: 'mapAddress',
+      type: 'textarea',
+    },
+    {
+      name: 'mapIframe',
       type: 'textarea',
     },
     {
