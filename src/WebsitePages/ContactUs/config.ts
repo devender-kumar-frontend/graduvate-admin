@@ -73,10 +73,10 @@ export const ContactUs: Omit<GlobalConfig, 'navItems'> = {
               label: 'Description',
               type: 'textarea',
             },
-            {
-              name: 'mapIframe',
-              type: 'textarea',
-            },
+            // {
+            //   name: 'mapIframe',
+            //   type: 'textarea',
+            // },
           ],
         },
 

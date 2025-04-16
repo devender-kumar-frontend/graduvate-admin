@@ -1,4 +1,5 @@
-import { CollectionConfig } from 'payload';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CollectionConfig } from 'payload'
 
 export const Enquiries: CollectionConfig = {
   slug: 'enquiries',
@@ -14,7 +15,7 @@ export const Enquiries: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label:'Full Name',
+      label: 'Full Name',
       type: 'text',
     },
     {
@@ -28,41 +29,43 @@ export const Enquiries: CollectionConfig = {
       type: 'text',
     },
     {
-      name:'amount',
+      name: 'amount',
       label: 'Loan Amount',
       type: 'text',
     },
     {
-      name:'duration',
-      label:'Course Duration',
-      type:'text',
-    }
+      name: 'duration',
+      label: 'Course Duration',
+      type: 'text',
+    },
   ],
   endpoints: [
     {
       path: '/finanace-enquiry',
       method: 'post',
-      handler: async (req:any) => {
+      handler: async (req: any) => {
         try {
-          const data = await req.json();
+          const data = await req.json()
           const newSubmission = await req.payload.create({
             collection: 'enquiries',
             data: {
-              name:data.name,
-              email:data.email,
-              number:data.number,
-              amount:data.amount,
-              duration:data.duration
+              name: data.name,
+              email: data.email,
+              number: data.number,
+              amount: data.amount,
+              duration: data.duration,
             },
-          });
+          })
 
-          return Response.json({
-            message: 'Submission saved successfully',
-            enquiry: newSubmission,
-          },{status:201});
-
+          return Response.json(
+            {
+              message: 'Submission saved successfully',
+              enquiry: newSubmission,
+            },
+            { status: 201 },
+          )
         } catch (error: any) {
-          return Response.json({ message: 'Internal server error', error: error.message });
+          return Response.json({ message: 'Internal server error', error: error.message })
         }
       },
     },

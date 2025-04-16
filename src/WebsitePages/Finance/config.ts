@@ -116,40 +116,40 @@ export const Finance: Omit<GlobalConfig, 'navItems'> = {
               label: 'Title',
               type: 'text',
             },
-            {
-              name: 'studentTestimonials',
-              type: 'array',
-              label: 'Testimonials',
-              labels: {
-                singular: 'Testimonial',
-                plural: 'Testimonials',
-              },
-              fields: [
-                {
-                  type: 'row',
-                  fields: [
-                    {
-                      name: 'testimonialsImage',
-                      type: 'upload',
-                      relationTo: 'media',
-                      required: false,
-                    },
-                    {
-                      name: 'studentName',
-                      type: 'text',
-                    },
-                    {
-                      name: 'studentUniversity',
-                      type: 'text',
-                    },
-                  ],
-                },
-                {
-                  name: 'studentreview',
-                  type: 'text',
-                },
-              ],
-            },
+            // {
+            //   name: 'studentTestimonials',
+            //   type: 'array',
+            //   label: 'Testimonials',
+            //   labels: {
+            //     singular: 'Testimonial',
+            //     plural: 'Testimonials',
+            //   },
+            //   fields: [
+            //     {
+            //       type: 'row',
+            //       fields: [
+            //         {
+            //           name: 'testimonialsImage',
+            //           type: 'upload',
+            //           relationTo: 'media',
+            //           required: false,
+            //         },
+            //         {
+            //           name: 'studentName',
+            //           type: 'text',
+            //         },
+            //         {
+            //           name: 'studentUniversity',
+            //           type: 'text',
+            //         },
+            //       ],
+            //     },
+            //     {
+            //       name: 'studentreview',
+            //       type: 'text',
+            //     },
+            //   ],
+            // },
           ],
         },
         {
