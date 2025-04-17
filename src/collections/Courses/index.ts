@@ -102,34 +102,35 @@ export const Courses: CollectionConfig<'courses'> = {
           fields: [
             {
               name: 'fees',
+              label: 'Net Price',
               type: 'text',
             },
-            {
-              name: 'duration',
-              type: 'text',
-            },
-            {
-              name: 'qualification',
-              type: 'text',
-            },
-            {
-              name: 'courseLevel',
-              type: 'text',
-            },
+            // {
+            //   name: 'duration',
+            //   type: 'text',
+            // },
+            // {
+            //   name: 'qualification',
+            //   type: 'text',
+            // },
+            // {
+            //   name: 'courseLevel',
+            //   type: 'text',
+            // },
             // {
             //   name: 'qualification2',
             //   label: 'Qualification',
             //   type: 'text',
             // },
-            {
-              name: 'intakes',
-              type: 'text',
-            },
-            {
-              name: 'tutionFees',
-              label: 'Tuition Fees',
-              type: 'text',
-            },
+            // {
+            //   name: 'intakes',
+            //   type: 'text',
+            // },
+            // {
+            //   name: 'tutionFees',
+            //   label: 'Tuition Fees',
+            //   type: 'text',
+            // },
             {
               name: 'hostelFees',
               label: 'Hostel Fees',
@@ -138,6 +139,11 @@ export const Courses: CollectionConfig<'courses'> = {
             {
               name: 'visaInsuranceFees',
               label: 'Visa and Insurance Fees',
+              type: 'text',
+            },
+            {
+              name: 'messFees',
+              label: 'Mess Fees',
               type: 'text',
             },
           ],
@@ -234,6 +240,7 @@ export const Courses: CollectionConfig<'courses'> = {
               tutionFees: true,
               visaInsuranceFees: true,
               hostelFees: true,
+              messFees: true,
             },
             where: {
               _status: {
@@ -263,6 +270,7 @@ export const Courses: CollectionConfig<'courses'> = {
             intakes: countryImg.intakes,
             visaInsuranceFees: countryImg.visaInsuranceFees,
             hostelFees: countryImg.hostelFees,
+            messFees: countryImg?.messFees,
           }))
 
           return Response.json({ message: 'Data fetched successfully', docs }, { status: 200 })
