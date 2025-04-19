@@ -77,6 +77,21 @@ export const journeyEnquiries: CollectionConfig = {
             },
           });
 
+          await req.payload.sendEmail({
+            to: process.env.TO_EMAIL,
+            from: process.env.FROM_EMAIL,
+            subject: 'New Journey Enquiry',
+            html: `
+              <h2>New Journey Enquiry</h2>
+              <p><strong>Name:</strong> ${data.fullName}</p>
+              <p><strong>Email:</strong> ${data.email}</p>
+              <p><strong>Phone:</strong> ${data.phone}</p>
+              <p><strong>Country Code:</strong> ${data.countryCode}</p>
+              <p><strong>Pursing:</strong> ${data.pursueEdu}</p>
+              <p><strong>Pursing Year:</strong> ${data.pursueYear}</p>
+            `,
+          });
+
           return Response.json({
             message: 'Submission saved successfully',
             enquiry: newSubmission,
