@@ -153,15 +153,15 @@ export default buildConfig({
     tasks: [],
   },
   email: nodemailerAdapter({
-    defaultFromAddress: process.env.FROM_EMAIL,
-    defaultFromName: process.env.FROM_NAME,
+    defaultFromAddress: process.env.FROM_EMAIL as string,
+    defaultFromName: process.env.FROM_NAME as string,
     // Any Nodemailer transport
     transport: await nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: 587,
+      host: process.env.SMTP_HOST as string,
+      port: Number(process.env.SMTP_PORT),
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER as string,
+        pass: process.env.SMTP_PASS as string,
       },
     }),
   }),
