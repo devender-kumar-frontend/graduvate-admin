@@ -78,8 +78,6 @@ export const journeyEnquiries: CollectionConfig = {
             },
           })
 
-          console.log(data)
-
           await req.payload.sendEmail({
             to: process.env.TO_EMAIL,
             from: process.env.FROM_EMAIL,
