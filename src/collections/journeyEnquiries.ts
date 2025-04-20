@@ -1,4 +1,5 @@
-import { CollectionConfig } from 'payload';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CollectionConfig } from 'payload'
 
 export const journeyEnquiries: CollectionConfig = {
   slug: 'journeyenquiries',
@@ -60,30 +61,47 @@ export const journeyEnquiries: CollectionConfig = {
     {
       path: '/enquiry',
       method: 'post',
-      handler: async (req:any) => {
+      handler: async (req: any) => {
         try {
-          const data = await req.json();
+          const data = await req.json()
           const newSubmission = await req.payload.create({
             collection: 'journeyenquiries',
             data: {
-              name:data.fullName,
-              countryCode:data.countryCode,
-              phone:data.phone,
-              email:data.email,
-              country:data.country,
-              pursueEdu:data.pursueEdu,
-              pursueYear:data.pursueYear,
-              courses:data.courses,
+              name: data.fullName,
+              countryCode: data.countryCode,
+              phone: data.phone,
+              email: data.email,
+              country: data.country,
+              pursueEdu: data.pursueEdu,
+              pursueYear: data.pursueYear,
+              courses: data.courses,
             },
-          });
+          })
 
-          return Response.json({
-            message: 'Submission saved successfully',
-            enquiry: newSubmission,
-          },{status:201});
+          await req.payload.sendEmail({
+            to: process.env.TO_EMAIL,
+            from: process.env.FROM_EMAIL,
+            subject: 'New Journey Enquiry',
+            html: `
+              <h2>New Journey Enquiry</h2>
+              <p><strong>Name:</strong> ${data?.fullName ?? ''}</p>
+              <p><strong>Email:</strong> ${data?.email ?? ''}</p>
+              <p><strong>Phone:</strong> ${data.phone ?? ''}</p>
+              <p><strong>Country Code:</strong> ${data?.countryCode ?? ''}</p>
+              <p><strong>Pursing:</strong> ${data?.pursueEdu ?? ''}</p>
+              <p><strong>Pursing Year:</strong> ${data?.pursueYear ?? ''}</p>
+            `,
+          })
 
+          return Response.json(
+            {
+              message: 'Submission saved successfully',
+              enquiry: newSubmission,
+            },
+            { status: 201 },
+          )
         } catch (error: any) {
-          return Response.json({ message: 'Internal server error', error: error.message });
+          return Response.json({ message: 'Internal server error', error: error.message })
         }
       },
     },

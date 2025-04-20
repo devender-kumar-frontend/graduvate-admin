@@ -56,6 +56,19 @@ export const Enquiries: CollectionConfig = {
               duration: data.duration,
             },
           })
+          await req.payload.sendEmail({
+            to: process.env.TO_EMAIL,
+            from: process.env.FROM_EMAIL,
+            subject: 'Finance Enquiry',
+            html: `
+              <h2>New Finance Enquiry</h2>
+              <p><strong>Name:</strong> ${data?.name ?? ''}</p>
+              <p><strong>Email:</strong> ${data?.email ?? ''}</p>
+              <p><strong>Phone:</strong> ${data?.number ?? ''}</p>
+              <p><strong>Amount:</strong> ${data?.amount ?? ''}</p>
+              <p><strong>Duration:</strong> ${data?.duration ?? ''}</p>
+            `,
+          })
 
           return Response.json(
             {

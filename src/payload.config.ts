@@ -24,6 +24,8 @@ import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 
 import { S3Client } from '@aws-sdk/client-s3'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import nodemailer from 'nodemailer'
 import s3Upload from 'payload-s3-upload'
 import { Blogs } from './collections/Blogs'
 import { Centers } from './collections/Centers'
@@ -150,4 +152,17 @@ export default buildConfig({
     },
     tasks: [],
   },
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.FROM_EMAIL as string,
+    defaultFromName: process.env.FROM_NAME as string,
+    // Any Nodemailer transport
+    transport: await nodemailer.createTransport({
+      host: process.env.SMTP_HOST as string,
+      port: Number(process.env.SMTP_PORT),
+      auth: {
+        user: process.env.SMTP_USER as string,
+        pass: process.env.SMTP_PASS as string,
+      },
+    }),
+  }),
 })
