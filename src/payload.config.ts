@@ -24,6 +24,8 @@ import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 
 import { S3Client } from '@aws-sdk/client-s3'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import nodemailer from 'nodemailer'
 import s3Upload from 'payload-s3-upload'
 import { Blogs } from './collections/Blogs'
 import { Centers } from './collections/Centers'
@@ -40,8 +42,6 @@ import { Finance } from './WebsitePages/Finance/config'
 import { Homepage } from './WebsitePages/Homepage/config'
 import { Kickstart } from './WebsitePages/Kickstart/config'
 import { PrivacyPolicy } from './WebsitePages/PrivacyPolicy/config'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-import nodemailer from 'nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
