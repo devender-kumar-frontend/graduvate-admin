@@ -36,8 +36,7 @@ export const journeyEnquiries: CollectionConfig = {
     {
       name: 'country',
       label: 'Country',
-      type: 'relationship',
-      relationTo: 'countries',
+      type: 'text',
     },
     {
       name: 'pursueEdu',
@@ -52,9 +51,9 @@ export const journeyEnquiries: CollectionConfig = {
     {
       name: 'courses',
       label: 'Interested Courses',
-      type: 'relationship',
-      relationTo: 'courses',
-      hasMany: true,
+      type: 'text',
+      // relationTo: 'courses',
+      // hasMany: true,
     },
   ],
   endpoints: [
@@ -86,10 +85,11 @@ export const journeyEnquiries: CollectionConfig = {
               <h2>New Journey Enquiry</h2>
               <p><strong>Name:</strong> ${data?.fullName ?? ''}</p>
               <p><strong>Email:</strong> ${data?.email ?? ''}</p>
-              <p><strong>Phone:</strong> ${data.phone ?? ''}</p>
-              <p><strong>Country Code:</strong> ${data?.countryCode ?? ''}</p>
+              <p><strong>Phone:</strong> ${data?.countryCode ?? ''} ${data.phone ?? ''}</p>
+              <p><strong>Country:</strong> ${data?.country ?? ''}</p>
               <p><strong>Pursing:</strong> ${data?.pursueEdu ?? ''}</p>
               <p><strong>Pursing Year:</strong> ${data?.pursueYear ?? ''}</p>
+              <p><strong>Courses:</strong> ${data?.courses ?? ''}</p>
             `,
           })
 
