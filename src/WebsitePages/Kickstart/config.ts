@@ -59,6 +59,11 @@ export const Kickstart: Omit<GlobalConfig, 'navItems'> = {
               label: 'Description',
               type: 'text',
             },
+            {
+              name: 'step3hide',
+              label: 'Hide This Step',
+              type: 'checkbox',
+            },
           ],
         },
         {
@@ -74,6 +79,11 @@ export const Kickstart: Omit<GlobalConfig, 'navItems'> = {
               label: 'Description',
               type: 'text',
             },
+            {
+              name: 'step4hide',
+              label: 'Hide This Step',
+              type: 'checkbox',
+            },
           ],
         },
         {
@@ -88,6 +98,32 @@ export const Kickstart: Omit<GlobalConfig, 'navItems'> = {
               name: 'step5Description',
               label: 'Description',
               type: 'text',
+            },
+            {
+              name: 'coursesLists',
+              type: 'array',
+              label: 'Courses',
+              labels: {
+                singular: 'Course',
+                plural: 'Cours',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'courseName',
+                      type: 'text',
+                    },
+                    {
+                      name: 'educationType',
+                      label: 'Type',
+                      type: 'select',
+                      options: ['Bachelors', 'Masters', 'Both'],
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

@@ -74,8 +74,6 @@ export const Homepage: Omit<GlobalConfig, 'navItems'> = {
               name: 'universitiesLogo',
               type: 'array',
               label: 'Logos',
-              minRows: 2,
-              maxRows: 10,
               labels: {
                 singular: 'Logo',
                 plural: 'Logos',
