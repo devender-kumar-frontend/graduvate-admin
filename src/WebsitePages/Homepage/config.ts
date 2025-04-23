@@ -6,7 +6,6 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { GlobalConfig } from 'payload'
-
 export const Homepage: Omit<GlobalConfig, 'navItems'> = {
   slug: 'homepage',
   access: {
