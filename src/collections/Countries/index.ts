@@ -366,7 +366,6 @@ export const Countries: CollectionConfig<'countries'> = {
       handler: async (req) => {
         try {
           const page = parseInt(req.query?.page as string) || 1
-          const limit = parseInt(req.query?.limit as string) || 10
           const result = await req.payload.find({
             collection: 'countries',
             select: {
@@ -382,7 +381,7 @@ export const Countries: CollectionConfig<'countries'> = {
               },
             },
             page,
-            limit,
+            limit: 200,
           })
           // Manually reduce to just the filename
           const allSlugs = result.docs.map((countryImg: any) => ({

@@ -28,10 +28,19 @@ export const Homepage: Omit<GlobalConfig, 'navItems'> = {
               type: 'text',
             },
             {
-              name: 'bannerImage',
-              type: 'upload',
-              relationTo: 'media',
-              required: false,
+              name: 'bannerImageSliders',
+              type: 'array',
+              labels: {
+                singular: 'Slider Image',
+                plural: 'Sider Images',
+              },
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                },
+              ],
             },
             {
               name: 'g2Text',
