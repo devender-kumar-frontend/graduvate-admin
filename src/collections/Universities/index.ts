@@ -489,6 +489,7 @@ export const Universities: CollectionConfig<'universities'> = {
 
           const universities = await req.payload.find({
             collection: 'universities',
+            limit: 100000,
             select: {
               title: true,
               slug: true,

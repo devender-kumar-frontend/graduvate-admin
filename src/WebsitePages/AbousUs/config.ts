@@ -74,8 +74,6 @@ export const AboutUs: Omit<GlobalConfig, 'navItems'> = {
               name: 'achievementsData',
               type: 'array',
               label: 'Counter Data',
-              minRows: 2,
-              maxRows: 10,
               labels: {
                 singular: 'Counter',
                 plural: 'Counters',
