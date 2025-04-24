@@ -13,6 +13,24 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
           label: 'Header',
           fields: [
             {
+              name: 'websiteLogo',
+              label: 'Logo',
+              type: 'upload',
+              relationTo: 'media',
+            },
+            {
+              name: 'websiteFooterLogo',
+              label: 'Footer Logo',
+              type: 'upload',
+              relationTo: 'media',
+            },
+            // {
+            //   name: 'websiteFavicon',
+            //   label: 'Favicon',
+            //   type: 'upload',
+            //   relationTo: 'media',
+            // },
+            {
               type: 'tabs',
               tabs: [
                 {
