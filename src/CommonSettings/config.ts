@@ -13,19 +13,60 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
           label: 'Header',
           fields: [
             {
-              name: 'headerCtaText',
-              label: 'CTA Text',
-              type: 'text',
-            },
-            {
-              name: 'headerCtaLink',
-              label: 'CTA Link',
-              type: 'text',
-            },
-            {
-              name: 'ctaRedirectExternal',
-              label: 'External Link',
-              type: 'checkbox',
+              type: 'tabs',
+              tabs: [
+                {
+                  label: 'Header Links',
+                  fields: [
+                    {
+                      name: 'headerLinks',
+                      type: 'array',
+                      fields: [
+                        {
+                          type: 'row',
+                          fields: [
+                            {
+                              name: 'headerLinkText',
+                              label: 'Menu Name',
+                              type: 'text',
+                            },
+                            {
+                              name: 'headerLinkUrl',
+                              label: 'Menu Link',
+                              type: 'text',
+                            },
+                            {
+                              name: 'headerMenuCountryDropdwon',
+                              label: 'Has Country Dropdown',
+                              type: 'checkbox',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  label: 'CTA',
+                  fields: [
+                    {
+                      name: 'headerCtaText',
+                      label: 'CTA Text',
+                      type: 'text',
+                    },
+                    {
+                      name: 'headerCtaLink',
+                      label: 'CTA Link',
+                      type: 'text',
+                    },
+                    {
+                      name: 'ctaRedirectExternal',
+                      label: 'External Link',
+                      type: 'checkbox',
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
@@ -66,6 +107,20 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
                     {
                       name: 'footerAboutUs',
                       type: 'textarea',
+                    },
+                  ],
+                },
+                {
+                  label: 'Footer Destinations',
+                  fields: [
+                    {
+                      name: 'countries',
+                      type: 'relationship',
+                      admin: {
+                        position: 'sidebar',
+                      },
+                      hasMany: true,
+                      relationTo: 'countries',
                     },
                   ],
                 },
