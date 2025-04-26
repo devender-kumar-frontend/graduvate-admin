@@ -156,7 +156,6 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
                     },
                   ],
                 },
-
                 {
                   label: 'Social Links',
                   fields: [
@@ -179,6 +178,40 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
                       name: 'graduvateInstagram',
                       label: 'Instagram',
                       type: 'text',
+                    },
+                  ],
+                },
+                {
+                  label: 'WhatsApp Chat Icon',
+                  fields: [
+                    {
+                      name: 'whatsappNumber',
+                      label: 'Whatsapp Number  (Eg: 911234567890)',
+                      type: 'text',
+                    },
+                    {
+                      name: 'showWhatsappOnWebsite',
+                      label: 'Show on Website',
+                      type: 'checkbox',
+                    },
+                  ],
+                },
+                {
+                  label: 'Scripts',
+                  fields: [
+                    {
+                      name: 'websiteScripts',
+                      type: 'textarea',
+                    },
+                    {
+                      name: 'cdnList',
+                      type: 'array',
+                      fields: [
+                        {
+                          name: 'scriptTag',
+                          type: 'text',
+                        },
+                      ],
                     },
                   ],
                 },
