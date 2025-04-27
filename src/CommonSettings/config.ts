@@ -317,6 +317,33 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
             },
           ],
         },
+        {
+          label: 'Global Search',
+          fields: [
+            {
+              name: 'popularSearchHeading',
+              type: 'text',
+            },
+            {
+              name: 'popularUniversities',
+              label: 'Universities',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              hasMany: true,
+              relationTo: 'universities',
+            },
+            {
+              name: 'noDataMessage',
+              type: 'text',
+            },
+            {
+              name: 'searchPlaceholder',
+              type: 'text',
+            },
+          ],
+        },
       ],
     },
   ],
