@@ -213,6 +213,16 @@ export const CommonSettings: Omit<GlobalConfig, 'navItems'> = {
                         },
                       ],
                     },
+                    {
+                      name: 'noScriptList',
+                      type: 'array',
+                      fields: [
+                        {
+                          name: 'noScriptTag',
+                          type: 'text',
+                        },
+                      ],
+                    },
                   ],
                 },
               ],
